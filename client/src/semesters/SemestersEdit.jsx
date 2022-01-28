@@ -4,7 +4,7 @@ import Semester from "./Semester";
 import Navbar from "../general/Navbar";
 import Header from "../general/Header";
 import { makeStyles } from "@mui/styles";
-import { Button, Container, Grid, Link } from "@mui/material";
+import { Button, Container, Grid, Link, TextField } from "@mui/material";
 
 
 const useStyles = makeStyles({
@@ -19,8 +19,13 @@ const useStyles = makeStyles({
     }
 })
 
-export default function Semesters(){
+export default function SemestersEdit(){
     const classes = useStyles();
+    const [addSemester, setAddSemester] = useState(false);
+    
+    function displayAddSemester(){
+        setAddSemester(true);
+    }
 
     return(
         <div>
@@ -36,21 +41,38 @@ export default function Semesters(){
                                 <p>Semesters</p>
                             </Grid>
                             <Grid item xs={4} textAlign="right">
-                                <Link href="#">Edit</Link>                    
+                                <Link href="#">Done</Link>                    
                             </Grid>
                         </Grid>
                 </Container>
             </header>
             
-            <Box textAlign={"center"} sx={{py:3}}>
+            <Box  textAlign={"center"} sx={{py:3}}>
                 <p>Tap a Semester to make it the current Semester</p>
             </Box>
-            
-            <Semester name="Winter 2022"/>
-            <Semester name="Fall 2021"/>
-            <Semester name="Summer 2021"/>
 
-            <Navbar />
+            {addSemester && 
+                <Box sx={{py:3, display:'flex'}}>
+                    <TextField  sx={{mx:3}} 
+                            id="standard-basic" 
+                            label="Semester Name" 
+                            variant="standard" 
+                            required/>
+                    <Button size="small">Add</Button>
+                </Box> }
+            
+            <Semester name="Winter 2022" deletable={true}/>
+            <Semester name="Fall 2021" deletable={true}/>
+            <Semester name="Summer 2021" deletable={true}/>
+
+            <Box sx={{py:4}} textAlign={"center"} position="absolute" bottom="0px" width="100%">
+                <button onClick={displayAddSemester}>
+                    <p>NEW SEMESTER</p>
+                    <i class="fas fa-plus-square fa-lg"></i>
+                </button>
+            </Box>
+
+            {/* <Navbar /> */}
         </div>
     )
 }

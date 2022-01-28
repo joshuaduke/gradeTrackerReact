@@ -4,7 +4,7 @@ import Semester from "./Semester";
 import Navbar from "../general/Navbar";
 import Header from "../general/Header";
 import { makeStyles } from "@mui/styles";
-import { Button, Container, Grid, Link } from "@mui/material";
+import { Button, Container, Grid, Link, TextField } from "@mui/material";
 
 
 const useStyles = makeStyles({
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function Semesters(){
+export default function SemestersAdd(){
     const classes = useStyles();
 
     return(
@@ -29,28 +29,26 @@ export default function Semesters(){
                     <Grid container sx={{py: 2}} textAlign="left">
                             <Grid item xs={4}>
                                 <Link href="#" underline="none">
-                                    <p>Close</p>
+                                    <p>Semesters</p>
                                 </Link>
                             </Grid>
                             <Grid item xs={4} textAlign="center">
-                                <p>Semesters</p>
+                                <p>New Semester</p>
                             </Grid>
                             <Grid item xs={4} textAlign="right">
-                                <Link href="#">Edit</Link>                    
+                                <Button variant="text" size="small">Save</Button>                    
                             </Grid>
                         </Grid>
                 </Container>
             </header>
             
-            <Box textAlign={"center"} sx={{py:3}}>
-                <p>Tap a Semester to make it the current Semester</p>
+            <Box sx={{py:3}}>
+                <TextField  sx={{mx:3}} 
+                            id="standard-basic" 
+                            label="Semester Name" 
+                            variant="standard" 
+                            required/>
             </Box>
-            
-            <Semester name="Winter 2022"/>
-            <Semester name="Fall 2021"/>
-            <Semester name="Summer 2021"/>
-
-            <Navbar />
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "@mui/material/Link";
 import ListItemText from '@mui/material/ListItemText';
-import { Container } from "@mui/material";
+import { Container, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { makeStyles } from "@mui/styles";
 
@@ -18,16 +18,29 @@ const useStyles = makeStyles({
 
 export default function Semester(props){
     const classes = useStyles();
-
-    return(
-        <div >
-            <Link href="" underline="none" className={classes.ListItemContainer}>
-                <Box >
-                    <Container>
-                        <ListItemText>{props.name}</ListItemText>
-                    </Container>
-                </Box>
-            </Link>
+    if(props.deletable === true){
+        return(
+        <div>
+            <Box className={classes.ListItemContainer}>
+                <Container sx={{display: 'flex'}}>
+                    <ListItemText>{props.name}</ListItemText>
+                    <Button color="error" variant="text">Delete</Button>
+                </Container>
+            </Box>
         </div>
-    )
+        )   
+    } else {
+        return(
+            <div >
+                <Link href="" underline="none" className={classes.ListItemContainer}>
+                    <Box >
+                        <Container>
+                            <ListItemText>{props.name}</ListItemText>
+                        </Container>
+                    </Box>
+                </Link>
+            </div>
+        )     
+    }
+
 }

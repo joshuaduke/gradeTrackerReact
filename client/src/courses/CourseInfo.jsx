@@ -31,7 +31,6 @@ export default function CourseInfo(props){
                     </Grid>
                 </Grid>
             </Container>
-
         </Box>
     )
 }
