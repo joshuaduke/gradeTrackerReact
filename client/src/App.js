@@ -13,7 +13,7 @@ import Register from './authentication/Register';
 function App() {
   return (
     <div>
-      <Register/>
+      <Login/>
     </div>
   );
 }

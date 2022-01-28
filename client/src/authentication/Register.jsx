@@ -14,9 +14,9 @@ const useStyles = makeStyles({
 export default function Login(){
     const classes = useStyles();
     return(
-        <Box>
+        <Box sx={{display: "flex", justifyContent: "center"}}>
 
-        <Box sx={{py:20, px:2, width:1}} textAlign={"center"} position="absolute" top="0px">
+        <Box sx={{py:20, width:1}} textAlign={"center"} position="absolute" top="0px">
             <h1>Joshua Duke</h1>
             <p>Insert Logo Here</p>
         </Box>
