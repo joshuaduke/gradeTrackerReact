@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { Container, Input, TextField } from "@mui/material";
+import { Container, Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -15,26 +15,56 @@ const useStyles = makeStyles({
 export default function Assignment(props){
     const classes = useStyles()
 
-    return(
-        <Container className={classes.border}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                <Box>
-                    <p>{props.title}</p>
+    if(props.editable === true){
+
+        return(
+            <Container className={classes.border}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                    <Box>
+                        <Button sx={{mr:2}} color="error" variant="text">Delete</Button>
+                        {props.title}
+                    </Box>
+                    <Box>
+                        <form>
+                            <span>Weight</span>
+                            <br/>
+                            {/* <span><input type="number" />%</span> */}
+                            <span>
+                                <TextField 
+                                    className={classes.input}
+                                    name="weight"
+                                    size="small"
+                                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}/>  %
+                            </span>
+                        </form>
+                    </Box>
                 </Box>
-                <Box>
-                    <form>
-                        <span>Need</span>
-                        <br/>
-                        {/* <span><input type="number" />%</span> */}
-                        <span>
-                            <TextField 
-                                className={classes.input}
-                                size="small"
-                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}/>  %
-                        </span>
-                    </form>
+            </Container>
+        )
+
+    } else {
+        return(
+            <Container className={classes.border}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                    <Box>
+                        <p>{props.title}</p>
+                    </Box>
+                    <Box>
+                        <form>
+                            <span>Need</span>
+                            <br/>
+                            {/* <span><input type="number" />%</span> */}
+                            <span>
+                                <TextField 
+                                    className={classes.input}
+                                    received="received"
+                                    size="small"
+                                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}/>  %
+                            </span>
+                        </form>
+                    </Box>
                 </Box>
-            </Box>
-        </Container>
-    )
+            </Container>
+        )
+    }
 }

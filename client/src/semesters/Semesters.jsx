@@ -5,6 +5,7 @@ import Navbar from "../general/Navbar";
 import Header from "../general/Header";
 import { makeStyles } from "@mui/styles";
 import { Button, Container, Grid, Link } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -28,7 +29,7 @@ export default function Semesters(){
                 <Container>
                     <Grid container sx={{py: 2}} textAlign="left">
                             <Grid item xs={4}>
-                                <Link href="#" underline="none">
+                                <Link href="/Courses" underline="none">
                                     <p>Close</p>
                                 </Link>
                             </Grid>
@@ -36,7 +37,7 @@ export default function Semesters(){
                                 <p>Semesters</p>
                             </Grid>
                             <Grid item xs={4} textAlign="right">
-                                <Link href="#">Edit</Link>                    
+                                <Link href="/Semesters/edit">Edit</Link>                    
                             </Grid>
                         </Grid>
                 </Container>
@@ -49,8 +50,6 @@ export default function Semesters(){
             <Semester name="Winter 2022"/>
             <Semester name="Fall 2021"/>
             <Semester name="Summer 2021"/>
-
-            <Navbar />
         </div>
     )
 }

@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Semester from "./Semester";
-import Navbar from "../general/Navbar";
-import Header from "../general/Header";
-import { makeStyles } from "@mui/styles";
-import { Button, Container, Grid, Link, TextField } from "@mui/material";
-
+import React, { useState }from 'react';
+import { Box, Button, TextField, Container, Grid, Link } from '@mui/material';
+import Navbar from '../general/Navbar';
+import Assignment from './Assignment';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
     border:{
@@ -19,70 +16,73 @@ const useStyles = makeStyles({
     }
 })
 
-export default function SemestersEdit(){
+export default function Class(){
     const classes = useStyles();
-    const [addSemester, setAddSemester] = useState(false);
-    
-    function displayAddSemester(){
-        setAddSemester(true);
+    const [ addClass, setAddClass ] = useState(false);
+
+    function displayAddClass(){
+        setAddClass(true);
     }
 
-    function handleNewSemester(option){
+    function handleNewClass(option){
         if(option === 'cancel'){
-            setAddSemester(false);
+            setAddClass(false);
         } else if (option === 'add'){
 
         }
     }
 
     return(
-        <div>
+        <Box>
             <header className={classes.headerContainer}>
                 <Container>
                     <Grid container sx={{py: 2}} textAlign="left">
                             <Grid item xs={4}>
-                                <Link href="/" underline="none">
-                                    <p>Close</p>
+                                <Link href="/Courses" underline="none">
+                                    Courses
                                 </Link>
                             </Grid>
                             <Grid item xs={4} textAlign="center">
-                                <p>Semesters</p>
+                                Class Name
                             </Grid>
                             <Grid item xs={4} textAlign="right">
-                                <Link href="/">Done</Link>                    
+                                <Link href="/Courses/1">Done</Link>                    
                             </Grid>
                         </Grid>
                 </Container>
             </header>
-            
-            {addSemester && 
+            <Box textAlign={'center'}>
+                <p>Total Possible</p>
+                <h2>100%</h2>
+            </Box>
+
+            {addClass && 
                 <Box sx={{py:3, display:'flex', justifyContent:'center'}}>
                 <Button size="small" 
                     color={'error'}
-                    onClick={()=> handleNewSemester('cancel')}>Cancel</Button>
+                    onClick={()=> handleNewClass('cancel')}>Cancel</Button>
                     
                     <TextField  sx={{mx:3}} 
                             id="standard-basic" 
-                            label="Semester Name" 
+                            label="Task Name" 
                             variant="standard" 
                             required/>
                     <Button size="small">Add</Button>
                 </Box> }
 
-            {!addSemester &&
+            {!addClass &&
                 <Box sx={{py:4}} textAlign={"center"} width="100%">
-                    <button onClick={displayAddSemester}>
-                        <p>NEW SEMESTER</p>
+                    <button onClick={displayAddClass}>
+                        <p>NEW TASK</p>
                         <i class="fas fa-plus-square fa-lg"></i>
                     </button>
                 </Box>
             }
-            
-            <Semester name="Winter 2022" deletable={true}/>
-            <Semester name="Fall 2021" deletable={true}/>
-            <Semester name="Summer 2021" deletable={true}/>
 
-            {/* <Navbar /> */}
-        </div>
+            <Assignment title="Assignment 1" editable={true}/>
+            <Assignment title="Assignment 2" editable={true}/>
+            <Assignment title="Assignment 3" editable={true}/>
+            <Navbar />
+        </Box>
     )
 }

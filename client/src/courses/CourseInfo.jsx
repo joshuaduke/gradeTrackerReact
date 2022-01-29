@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Grid } from "@mui/material";
-import { Box } from "@mui/system";
+import { Container, Grid, Box, Button } from "@mui/material";
+
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -13,24 +13,50 @@ const useStyles = makeStyles({
 export default function CourseInfo(props){
     const classes = useStyles();
 
-    return(
-        <Box className={classes.container}>
-            <Container>
-                <Grid container sx={{py:4}}>
-                    <Grid xs={2}>
-                        <p>{props.courseName}</p>
+    if(props.deletable === true){
+        return(
+            <Box className={classes.container}>
+                <Container sx={{display: 'flex'}}>
+                    <Grid container sx={{py:4}}>
+                        <Grid xs={3}>
+                            <p>{props.courseName}</p>
+                        </Grid>
+                        <Grid xs={9}>
+                            <p>{props.gpa}</p>
+                        </Grid>
+                        <Grid xs={3}>
+                            <p>{props.gradePercentage}</p>
+                        </Grid>
+                        <Grid xs={9}>
+                            <p>{props.gradeLetter}</p>
+                        </Grid>
                     </Grid>
-                    <Grid xs={10}>
-                        <p>{props.gpa}</p>
+                    <Button color="error" variant="text">Delete</Button>
+                </Container>
+            </Box>
+        )
+    } else {
+        return(
+            <Box className={classes.container}>
+                <Container>
+                    <Grid container sx={{py:4}}>
+                        <Grid xs={3}>
+                            <p>{props.courseName}</p>
+                        </Grid>
+                        <Grid xs={9}>
+                            <p>{props.gpa}</p>
+                        </Grid>
+                        <Grid xs={3}>
+                            <p>{props.gradePercentage}</p>
+                        </Grid>
+                        <Grid xs={9}>
+                            <p>{props.gradeLetter}</p>
+                        </Grid>
                     </Grid>
-                    <Grid xs={2}>
-                        <p>{props.gradePercentage}</p>
-                    </Grid>
-                    <Grid xs={10}>
-                        <p>{props.gradeLetter}</p>
-                    </Grid>
-                </Grid>
-            </Container>
-        </Box>
-    )
+                </Container>
+            </Box>
+        )
+    }
+
+
 }
