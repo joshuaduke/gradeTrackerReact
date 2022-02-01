@@ -1,5 +1,8 @@
 import React, { useState }from 'react';
-import { Box, Button, TextField, Container, Grid, Link, Modal, Typography } from '@mui/material';
+import {Box, Button, TextField, Container, 
+        Grid, Link, Modal, Typography, 
+        RadioGroup, FormControl,
+        Radio, FormControlLabel} from '@mui/material';
 import Navbar from '../general/Navbar';
 import Assignment from './Assignment';
 import { makeStyles } from '@mui/styles';
@@ -31,9 +34,11 @@ const style = {
 export default function Class(){
     const classes = useStyles();
     const [ addClass, setAddClass ] = useState(false);
-    const [open , setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [openModal , setOpenModal] = useState(false);
+    const [radioValue, setRadioValue] = useState('single');
+
+    const handleOpen = () => setOpenModal(true);
+    const handleClose = () => setOpenModal(false);
 
     function displayAddClass(){
         setAddClass(true);
@@ -45,6 +50,10 @@ export default function Class(){
         } else if (option === 'add'){
 
         }
+    }
+
+    function handleRadioChange(e){
+        setRadioValue(e.target.value);
     }
 
     return(
@@ -72,7 +81,7 @@ export default function Class(){
             </Box>
 
             <Modal
-            open={open}
+            open={openModal}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
@@ -82,9 +91,41 @@ export default function Class(){
                 Add a new Task
                 </Typography>
                 
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
+                <FormControl id="new-task-radio-group">
+                    <RadioGroup row  
+                                aria-labelledby="new-task-radio-group" 
+                                name="task-radio-group"
+                                value={radioValue}
+                                onChange={handleRadioChange}>
+                        <FormControlLabel value="single" label="Single Task" control={<Radio />}/>
+                        <FormControlLabel value="grouped" label="Grouped Tasks" control={<Radio />}/>
+                    </RadioGroup>
+                </FormControl>
+
+                { radioValue === 'single' && 
+                    <Box>
+                        <Box>
+                            <TextField variant="standard" label="Task Name" name='singleTaskName' size='small'/>
+                            <TextField variant="standard" label="Weight" name="singleWeight" size='small'/>
+                        </Box>
+                        
+                        <Button variant="contained">Add </Button>
+                    </Box>
+                }
+
+                { radioValue === 'grouped' && 
+                    <Box>
+                        <Box>
+                            <TextField variant="standard" label="Task Name" name='groupedTaskName' size='small'/>
+                            <TextField variant="standard" label="Quantity" name="quantity" size='small'/>
+                            <TextField variant="standard" label="Total Weigt" name="totalWeight" size='small'/>
+
+                        </Box>
+                        
+                        <Button variant="contained">Add </Button>
+                    </Box>
+                }
+
             </Box>
             </Modal>
             {/* {addClass && 
