@@ -1,5 +1,5 @@
 import React, { useState }from 'react';
-import { Box, Button, TextField, Container, Grid, Link } from '@mui/material';
+import { Box, Button, TextField, Container, Grid, Link, Modal, Typography } from '@mui/material';
 import Navbar from '../general/Navbar';
 import Assignment from './Assignment';
 import { makeStyles } from '@mui/styles';
@@ -16,9 +16,24 @@ const useStyles = makeStyles({
     }
 })
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
 export default function Class(){
     const classes = useStyles();
     const [ addClass, setAddClass ] = useState(false);
+    const [open , setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     function displayAddClass(){
         setAddClass(true);
@@ -56,7 +71,23 @@ export default function Class(){
                 <h2>100%</h2>
             </Box>
 
-            {addClass && 
+            <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >
+            <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                Add a new Task
+                </Typography>
+                
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                </Typography>
+            </Box>
+            </Modal>
+            {/* {addClass && 
                 <Box sx={{py:3, display:'flex', justifyContent:'center'}}>
                 <Button size="small" 
                     color={'error'}
@@ -68,11 +99,11 @@ export default function Class(){
                             variant="standard" 
                             required/>
                     <Button size="small">Add</Button>
-                </Box> }
+                </Box> } */}
 
             {!addClass &&
                 <Box sx={{py:4}} textAlign={"center"} width="100%">
-                    <button onClick={displayAddClass}>
+                    <button onClick={handleOpen}>
                         <p>NEW TASK</p>
                         <i class="fas fa-plus-square fa-lg"></i>
                     </button>

@@ -24,7 +24,7 @@ export default function Navbar(){
                     </Grid>
 
                     <Grid item xs={4}>
-                        <Link href="#" underline="none">
+                        <Link href="/Grades" underline="none">
                             <i class="fas fa-graduation-cap"></i>
                             <p>CGPA</p>
                         </Link>

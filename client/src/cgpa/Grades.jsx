@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Semester from "./Semester";
+import Semester from "../semesters/Semester";
 import Navbar from "../general/Navbar";
-import Header from "../general/Header";
 import { makeStyles } from "@mui/styles";
 import { Button, Container, Grid, Link } from "@mui/material";
 
@@ -28,27 +27,28 @@ export default function Semesters(){
                 <Container>
                     <Grid container sx={{py: 2}} textAlign="left">
                             <Grid item xs={4}>
-                                <Link href="/Courses" underline="none">
-                                    <p>Close</p>
+                                <Link href="#" underline="none">
+                                    <p> Add Grade </p>
                                 </Link>
                             </Grid>
                             <Grid item xs={4} textAlign="center">
-                                <p>Semesters</p>
+                                <p>GPA Calculator</p>
                             </Grid>
                             <Grid item xs={4} textAlign="right">
-                                <Link href="/Semesters/edit">Edit</Link>                    
+                                <Link href="/Scales">Scales</Link>                    
                             </Grid>
                         </Grid>
                 </Container>
             </header>
             
-            <Box textAlign={"center"} sx={{py:3}}>
-                <p>Tap a Semester to make it the current Semester</p>
+            <Box textAlign={"center"}>
+                <h3>3.20</h3>
             </Box>
             
-            <Semester name="Winter 2022"/>
-            <Semester name="Fall 2021"/>
-            <Semester name="Summer 2021"/>
+            <Semester name="Winter 2022" displayCgpa={true}/>
+            <Semester name="Fall 2021" displayCgpa={true}/>
+            <Semester name="Summer 2021" displayCgpa={true}/>
+            <Navbar/>
         </div>
     )
 }
