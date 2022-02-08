@@ -7,6 +7,7 @@ import { makeStyles } from "@mui/styles";
 import { Button, Container, Grid, Link } from "@mui/material";
 import Logout from  '../authentication/Logout';
 import jwt from 'jwt-decode';
+import axios from "axios";
 
 const useStyles = makeStyles({
     border:{
@@ -22,6 +23,10 @@ const useStyles = makeStyles({
 
 export default function Semesters(){
     const classes = useStyles();
+    const [semesters, setSemesters] = useState([]);
+    // const listSemesters = semesters.map((semester)=>{
+    //     <Semester name={semester.semesterName}/>
+    // })
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -33,8 +38,16 @@ export default function Semesters(){
                 window.location.href = '/login'
             } else {
                 //retrieve all semesters
-                //retrieveSemesters
                 console.log('Retrieve semesters')
+                axios.get('http://localhost:5000/semesters', {headers: {Authorization: `${token}`}})
+                    .then((result)=>{
+                        console.log('result');
+                        console.log(result)
+                        setSemesters(result.data);
+                    })
+                    .catch((err)=>{
+                        console.log(err);
+                    })
             }
         } else {
             window.location.href = '/login'
@@ -67,9 +80,13 @@ export default function Semesters(){
 
             <Logout />
             
-            <Semester name="Winter 2022"/>
+            {semesters.map((semester) => <Semester name={semester.semesterName}/>)}
+
+            {/* {listSemesters} */}
+            
+            {/* <Semester name="Winter 2022"/>
             <Semester name="Fall 2021"/>
-            <Semester name="Summer 2021"/>
+            <Semester name="Summer 2021"/> */}
         </div>
     )
 }

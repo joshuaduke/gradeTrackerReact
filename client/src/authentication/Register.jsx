@@ -30,7 +30,7 @@ export default function Login(){
         }
         console.log(credentials);
         
-        axios.post('http://localhost:5000/register', credentials)
+        axios.post('http://localhost:5000/auth/register', credentials)
             .then(() => {
                 console.log('Success');
             })
@@ -38,7 +38,6 @@ export default function Login(){
                 console.log('Err', err);
             })
     }
-
 
     return(
         <Box sx={{display: "flex", justifyContent: "center"}}>
