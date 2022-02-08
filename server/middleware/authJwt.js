@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/db.config');
 
 verifyToken = (req, res, next) => {
-    let token = req.session.token;
+    // let token = req.session.token;
+    let token =req.headers.authorization;
+    console.log(req.headers.authorization);
     if(!token){
         return res.status(403).send({
             message: 'No token provided'

@@ -10,8 +10,8 @@ module.exports = (app)=>{
         next();
     });
   app.get('/home', controller.home);
-  app.get('/students', authJwt.verifyToken, controller.home);
-  app.get('/semesters', authJwt.verifyToken, controller.home);
-  app.get('/class', authJwt.verifyToken, controller.home);
+  app.get('/students', authJwt.verifyToken, controller.students);
+  app.get('/semesters', authJwt.verifyToken, controller.semesters);
+  app.get('/class', authJwt.verifyToken, controller.class);
 }
 
