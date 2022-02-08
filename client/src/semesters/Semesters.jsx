@@ -24,9 +24,6 @@ const useStyles = makeStyles({
 export default function Semesters(){
     const classes = useStyles();
     const [semesters, setSemesters] = useState([]);
-    // const listSemesters = semesters.map((semester)=>{
-    //     <Semester name={semester.semesterName}/>
-    // })
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -39,6 +36,7 @@ export default function Semesters(){
             } else {
                 //retrieve all semesters
                 console.log('Retrieve semesters')
+                console.log(student);
                 axios.get('http://localhost:5000/semesters', {headers: {Authorization: `${token}`}})
                     .then((result)=>{
                         console.log('result');
@@ -80,13 +78,8 @@ export default function Semesters(){
 
             <Logout />
             
-            {semesters.map((semester) => <Semester name={semester.semesterName}/>)}
+            {semesters.slice(0).reverse().map((semester) => <Semester key={semester.semesterId} name={semester.semesterName}/>)}
 
-            {/* {listSemesters} */}
-            
-            {/* <Semester name="Winter 2022"/>
-            <Semester name="Fall 2021"/>
-            <Semester name="Summer 2021"/> */}
         </div>
     )
 }
