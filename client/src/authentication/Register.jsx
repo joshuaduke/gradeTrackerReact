@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Box, Container, InputAdornment, TextField, Button, Paper } from '@mui/material'
 import { makeStyles } from "@mui/styles";
+import axios from 'axios';
 
 const useStyles = makeStyles({
     inputWidth:{
@@ -12,7 +13,33 @@ const useStyles = makeStyles({
 })
 
 export default function Login(){
-    const classes = useStyles();
+    const classes = useStyles('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const register = (e) =>{
+        e.preventDefault();
+
+        const credentials = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        }
+        console.log(credentials);
+        
+        axios.post('http://localhost:5000/register', credentials)
+            .then(() => {
+                console.log('Success');
+            })
+            .catch((err)=>{
+                console.log('Err', err);
+            })
+    }
+
+
     return(
         <Box sx={{display: "flex", justifyContent: "center"}}>
 
@@ -43,6 +70,8 @@ export default function Login(){
                                         type="text" 
                                         placeholder='First Name' 
                                         className={classes.inputWidth}
+                                        value={firstName}
+                                        onChange={(e) => setFirstName(e.target.value)}
                                         id="input-with-icon-textfield"
                                         margin='dense'
                                         InputProps={{
@@ -54,27 +83,31 @@ export default function Login(){
                                             }}
                                         required/>
 
-                            <TextField  variant="standard"
-                                        name="lastName" 
-                                        type="text" 
-                                        placeholder='Last Name' 
-                                        className={classes.inputWidth}
-                                        id="input-with-icon-textfield"
-                                        margin='dense'
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <i class="fas fa-user-circle"></i>
-                                                </InputAdornment>
-                                            ),
-                                            }}
-                                        required/>                                
+                        <TextField  variant="standard"
+                                    name="lastName" 
+                                    type="text" 
+                                    placeholder='Last Name' 
+                                    className={classes.inputWidth}
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    id="input-with-icon-textfield"
+                                    margin='dense'
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <i class="fas fa-user-circle"></i>
+                                            </InputAdornment>
+                                        ),
+                                        }}
+                                    required/>                                
 
                             <TextField  variant="standard"
                                         name="email" 
                                         type="email" 
                                         placeholder='Email' 
                                         className={classes.inputWidth}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         id="input-with-icon-textfield"
                                         margin='dense'
                                         InputProps={{
@@ -91,6 +124,8 @@ export default function Login(){
                                         type="password" 
                                         placeholder='Password' 
                                         className={classes.inputWidth}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                         id="input-with-icon-textfield"
                                         margin='dense'
                                         InputProps={{
@@ -106,8 +141,7 @@ export default function Login(){
                             Already have an account? <a href="#">Login</a>
                         </Box>
                         
-                        <Button 
-
+                        <Button onClick={(e) => register(e)}
                                 sx={{my:2, width:1}}>
                             Register
                         </Button>

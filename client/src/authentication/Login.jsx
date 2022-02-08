@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Container, InputAdornment, TextField, Button, Paper } from '@mui/material'
 import { makeStyles } from "@mui/styles";
+import axios from 'axios';
 
 const useStyles = makeStyles({
     inputWidth:{
@@ -13,6 +14,37 @@ const useStyles = makeStyles({
 
 export default function Login(){
     const classes = useStyles();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    function authenticateUser(e){
+        e.preventDefault();
+
+        const credentials = {
+            email: email,
+            password: password
+        }
+
+        axios.post('http://localhost:5000/auth/login', credentials)
+            .then( (result) =>{
+                console.log(result.data);
+                
+                if(result.data.student){
+                    localStorage.setItem('token', result.data.student)
+                    console.log('Logged In');
+                    window.location.href = '/'
+                } else {
+                    console.log('Please Your Username and password');
+                }
+                
+            })
+            .catch((err)=>{
+                console.log('Err', err);
+                alert('Check email or password')
+            })
+
+    }
+
     return(
         <Box sx={{display: "flex", justifyContent: "center"}}>
             <Box   
@@ -40,6 +72,8 @@ export default function Login(){
                                         className={classes.inputWidth}
                                         id="input-with-icon-textfield"
                                         margin='dense'
+                                        value={email}
+                                        onChange={(e)=> setEmail(e.target.value)}
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
@@ -56,6 +90,8 @@ export default function Login(){
                                         className={classes.inputWidth}
                                         id="input-with-icon-textfield"
                                         margin='dense'
+                                        value={password}
+                                        onChange={(e)=> setPassword(e.target.value)}
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
@@ -65,7 +101,7 @@ export default function Login(){
                                             }}
                                         required/>
                                                         
-                            <Button sx={{my:2, width:1}}>
+                            <Button sx={{my:2, width:1}} onClick={authenticateUser}>
                                 Login
                             </Button>
 
