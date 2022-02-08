@@ -46,9 +46,14 @@ exports.logIn = async (req, res)=>{
                 })
             }
 
-            const token = jwt.sign({id: foundStudent[0].id}, process.env.JWT_SECRET,{
-                expiresIn: 86400 //24 hours
-            })
+            const token = jwt.sign(
+                {
+                    id: foundStudent[0].id,
+                    email: foundStudent[0].email
+                }, process.env.JWT_SECRET,
+                { expiresIn: 86400 })
+
+
             req.session.token = token;
             // return res.status(200).send({
             //     id: result[0].id,
@@ -56,9 +61,7 @@ exports.logIn = async (req, res)=>{
             //     lastName: result[0].lastName,
             //     email: result[0].email
             // })
-            return res.status(200).send({
-                foundStudent
-            })
+            return res.json({status: 'ok', student: token});
         })
     } catch (err) {
         res.status(500).send({message: error.message});
