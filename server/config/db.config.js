@@ -26,18 +26,21 @@ db.connect((err)=>{
     //     if(err) throw err;
     //     console.log('Semesters Table has been created!');
     // });
-    let values = [
-        ['Summer 2022', null,   false , 17],
-        ['Winter 2022', null,   true ,  17],
-        ['Fall 2021',   2.4,    false,  6],
-        ['Summer 2019', 4.0,    false,  17]
-    ]
 
-    let insertIntoSemester = 'INSERT INTO Semesters (semesterName, gpa, active, id) VALUES ?'
-    db.query(insertIntoSemester, [values], (err, result)=>{
-        if(err) throw err;
-        console.log('Semester has been entered')
-    })
+    // Enter Values into semesters
+
+    // let values = [
+    //     ['Summer 2022', null,   false , 17],
+    //     ['Winter 2022', null,   true ,  17],
+    //     ['Fall 2021',   2.4,    false,  6],
+    //     ['Summer 2019', 4.0,    false,  17]
+    // ]
+
+    // let insertIntoSemester = 'INSERT INTO Semesters (semesterName, gpa, active, id) VALUES ?'
+    // db.query(insertIntoSemester, [values], (err, result)=>{
+    //     if(err) throw err;
+    //     console.log('Semester has been entered')
+    // })
 })
 
 module.exports = db;

@@ -26,3 +26,42 @@ exports.semesters = (req, res) => {
 exports.class = (req, res) => {
     res.status(200).send("Class Content.");
 };
+
+//Post
+exports.addSemester = (req, res)=> {
+
+    //check for duplicate name
+    const findSemester = `
+        SELECT * FROM semesters 
+        WHERE semesterName = '${req.body.semesterName}'
+        AND id = ${req.body.id}
+    `
+
+    //add new semester
+    const addNewSemester = `
+        INSERT INTO semesters (semesterName, gpa, active, id)
+        VALUES('${req.body.semesterName}', ${req.body.gpa}, ${req.body.active}, ${req.body.id})
+    `;
+
+    db.query(findSemester, (err, semester)=>{
+        if(err) throw err;
+        console.log(semester);
+        if(semester.length > 0 ){
+            return res.status(400).send({message: 'Semester name already exists'});
+        } else {
+
+            db.query(addNewSemester,(err, result)=>{
+                if(err){
+                    res.status(400).send({message: 'Error adding new semester'});
+                }
+        
+                if(result){
+                    res.send({message: 'Semester has been added'});
+                    console.log('Semester has been added');
+                    // console.log(result);
+                 }
+        
+            })
+        }
+    })
+};

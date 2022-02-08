@@ -13,4 +13,5 @@ module.exports = (app) => {
     app.post('/auth/register', verifySignUp.checkDuplicate , controller.register);
     app.post('/auth/login',  controller.logIn);
     app.post('/auth/logout', controller.logOut);
+
 };
