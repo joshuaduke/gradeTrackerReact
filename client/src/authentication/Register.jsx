@@ -18,6 +18,7 @@ export default function Login(){
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errMsg, setErrMsg] = useState('');
 
     const register = (e) =>{
         e.preventDefault();
@@ -31,11 +32,14 @@ export default function Login(){
         console.log(credentials);
         
         axios.post('http://localhost:5000/auth/register', credentials)
-            .then(() => {
-                console.log('Success');
+            .then((response) => {
+                console.log('response');
+                window.location.href = '/login';
             })
             .catch((err)=>{
                 console.log('Err', err);
+                console.log(err.response.data.message);
+                setErrMsg(err.response.data.message);
             })
     }
 
@@ -63,7 +67,6 @@ export default function Login(){
                             </Box>
                         </Box>
 
-                        
                         <TextField  variant="standard"
                                         name="firstName" 
                                         type="text" 
@@ -135,9 +138,11 @@ export default function Login(){
                                             ),
                                             }}
                                         required/>
+
+                        <p style={{color:'red'}}> {errMsg}</p>
                         
                         <Box component="p" sx={{py: 2, fontSize: "0.9em"}}>
-                            Already have an account? <a href="#">Login</a>
+                            Already have an account? <a href="/login">Login</a>
                         </Box>
                         
                         <Button onClick={(e) => register(e)}

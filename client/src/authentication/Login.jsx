@@ -16,9 +16,10 @@ export default function Login(props){
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errMsg, setErrMsg] = useState('');
 
     function authenticateUser(e){
-        e.preventDefault();
+        // e.preventDefault();
 
         const credentials = {
             email: email,
@@ -41,7 +42,7 @@ export default function Login(props){
             })
             .catch((err)=>{
                 console.log('Err', err);
-                alert('Check email or password')
+                setErrMsg(err.response.data.message);
             })
     }
 
@@ -100,6 +101,8 @@ export default function Login(props){
                                             ),
                                             }}
                                         required/>
+                            
+                            <p style={{color:'red'}}> {errMsg}</p>                                        
                                                         
                             <Button sx={{my:2, width:1}} onClick={authenticateUser}>
                                 Login
@@ -113,7 +116,7 @@ export default function Login(props){
                             </Box>  
 
                             <Box component="p" sx={{py: 2, fontSize: "0.9em"}} textAlign={"center"}>
-                                Don't have an account? <a href="#">Login</a>
+                                Don't have an account? <a href="/register">Register</a>
                             </Box>
                         </form>
                     </Container>
