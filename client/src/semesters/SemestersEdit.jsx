@@ -78,17 +78,17 @@ export default function SemestersEdit(){
                 id: currentStudent.id
             }
     
-            axios.post('http://localhost:5000/addSemester', credentials)
+            axios.post('http://localhost:5000/semesters', credentials)
                 .then( (result) =>{
-                    console.log('ADDED DATA')
-                    console.log(result.data);
-                    const newSemesters = [...semesters, credentials];
-                    setSemesters(newSemesters);
+                    // console.log('ADDED DATA')
+                    // console.log(result.data);
+                    // const newSemesters = [...semesters, credentials];
+                    // setSemesters(newSemesters);
+                    window.location.href = '/';
                 })
                 .catch((err)=>{
                     console.log('Err', err);
                 })
-
         }
     }
 
@@ -133,14 +133,14 @@ export default function SemestersEdit(){
                 <Box sx={{py:4}} textAlign={"center"} width="100%">
                     <button onClick={displayAddSemester}>
                         <p>NEW SEMESTER</p>
-                        <i class="fas fa-plus-square fa-lg"></i>
+                        <i className="fas fa-plus-square fa-lg"></i>
                     </button>
                 </Box>
             }
             
 
             {semesters.slice(0).reverse().map((semester) => 
-                <Semester key={semester.semesterId} name={semester.semesterName} deletable={true}/>
+                <Semester key={semester.semesterId} name={semester.semesterName} id={semester.semesterId} deletable={true}/>
             )}
 
             {/* <Navbar /> */}

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Semester from "./Semester";
-import Navbar from "../general/Navbar";
-import Header from "../general/Header";
 import { makeStyles } from "@mui/styles";
 import { Button, Container, Grid, Link } from "@mui/material";
 import Logout from  '../authentication/Logout';

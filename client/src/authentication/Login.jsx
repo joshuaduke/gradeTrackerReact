@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function Login(){
+export default function Login(props){
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,11 +28,12 @@ export default function Login(){
         axios.post('http://localhost:5000/auth/login', credentials)
             .then( (result) =>{
                 console.log(result.data);
-                
+
                 if(result.data.student){
                     localStorage.setItem('token', result.data.student)
                     console.log('Logged In');
                     window.location.href = '/'
+
                 } else {
                     console.log('Please Your Username and password');
                 }
@@ -42,7 +43,6 @@ export default function Login(){
                 console.log('Err', err);
                 alert('Check email or password')
             })
-
     }
 
     return(
@@ -77,7 +77,7 @@ export default function Login(){
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
-                                                    <i class="fas fa-at"></i>
+                                                    <i className="fas fa-at"></i>
                                                 </InputAdornment>
                                             ),
                                             }}
@@ -95,7 +95,7 @@ export default function Login(){
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
-                                                    <i class="fas fa-key"></i>
+                                                    <i className="fas fa-key"></i>
                                                 </InputAdornment>
                                             ),
                                             }}

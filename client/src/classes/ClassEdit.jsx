@@ -146,7 +146,7 @@ export default function Class(){
                 <Box sx={{py:4}} textAlign={"center"} width="100%">
                     <button onClick={handleOpen}>
                         <p>NEW TASK</p>
-                        <i class="fas fa-plus-square fa-lg"></i>
+                        <i className="fas fa-plus-square fa-lg"></i>
                     </button>
                 </Box>
             }

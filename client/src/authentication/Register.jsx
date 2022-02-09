@@ -76,7 +76,7 @@ export default function Login(){
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
-                                                    <i class="fas fa-user-graduate"></i>
+                                                    <i className="fas fa-user-graduate"></i>
                                                 </InputAdornment>
                                             ),
                                             }}
@@ -94,7 +94,7 @@ export default function Login(){
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
-                                                <i class="fas fa-user-circle"></i>
+                                                <i className="fas fa-user-circle"></i>
                                             </InputAdornment>
                                         ),
                                         }}
@@ -112,7 +112,7 @@ export default function Login(){
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
-                                                    <i class="fas fa-at"></i>
+                                                    <i className="fas fa-at"></i>
                                                 </InputAdornment>
                                             ),
                                             }}
@@ -130,7 +130,7 @@ export default function Login(){
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
-                                                    <i class="fas fa-key"></i>
+                                                    <i className="fas fa-key"></i>
                                                 </InputAdornment>
                                             ),
                                             }}

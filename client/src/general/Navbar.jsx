@@ -17,7 +17,7 @@ export default function Navbar(){
                 <Grid container sx={{py:3}} textAlign={"center"}>
                     <Grid item xs={4}>
                         <Link href="/Courses" underline="none">
-                            <i class="fas fa-school"></i>
+                            <i className="fas fa-school"></i>
                             <p>Courses</p>
                         </Link>
                         
@@ -25,14 +25,14 @@ export default function Navbar(){
 
                     <Grid item xs={4}>
                         <Link href="/Grades" underline="none">
-                            <i class="fas fa-graduation-cap"></i>
+                            <i className="fas fa-graduation-cap"></i>
                             <p>CGPA</p>
                         </Link>
                     </Grid>
                     
                     <Grid item xs={4}>
                         <Link href="/Settings" underline="none">
-                            <i class="fas fa-cog"></i>
+                            <i className="fas fa-cog"></i>
                             <p>Settings</p>
                         </Link>
                     </Grid>

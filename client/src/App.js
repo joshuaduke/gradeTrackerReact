@@ -11,15 +11,26 @@ import Settings from './settings/Settings';
 import Scales from './cgpa/Scales';
 import Login from './authentication/Login';
 import Register from './authentication/Register';
-import {BrowserRouter as Router, Route,  Routes } from 'react-router-dom' ;
+import {BrowserRouter as Router, Navigate, Route,  Routes, useNavigate } from 'react-router-dom' ;
+
+const token = localStorage.getItem('token');
+
 
 function App() {
+
   return (
     <Router>
       <Routes>
-          <Route path="/" element={<Semesters/>} />
-          <Route path="/Login" element={<Login/>} />
-          <Route path="/Register" element={<Register/>} />
+        {!token && (
+          <>
+            <Route path="/Login" element={<Login/> } />
+            <Route path="/Register" element={<Register/>} />
+          </>
+        )}
+        {token && (
+          <>
+          <Route path='/' element={<Semesters /> } />
+          
           <Route path="/Semesters/edit" element={<SemestersEdit/>} />
           <Route path="/Courses" element={<Courses/>} />
           <Route path="/Courses/edit" element={<CoursesEdit/>} />
@@ -28,6 +39,10 @@ function App() {
           <Route path="/Scales" element={<Scales/>} />
           <Route path="/Grades" element={<Grades/>} />
           <Route path="/Settings" element={<Settings/>}/>
+          <Route path="*" element={<Login/>}/>
+          </>
+        )}
+        <Route path="*" element={<Navigate to={token ? '/' : '/Login'}/>} />
       </Routes>
     </Router>
   );
