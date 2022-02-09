@@ -35,7 +35,7 @@ exports.logIn = async (req, res)=>{
             console.log(foundStudent);
             if(foundStudent.length === 0){
                 return res.status(404).send({
-                    message: 'Student not found'
+                    message: 'Email not found'
                 });
             }
             
