@@ -14,6 +14,8 @@ module.exports = (app)=>{
   app.get('/semesters', authJwt.verifyToken, controller.semesters);
   app.get('/class', authJwt.verifyToken, controller.class);
 
-  app.post('/addSemester', controller.addSemester);
+  app.post('/semesters', controller.addSemester);
+  app.patch('/semesters/:id', controller.updateSemester);
+  app.delete('/semesters/:id', controller.deleteSemester);
 }
 

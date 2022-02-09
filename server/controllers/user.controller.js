@@ -65,3 +65,34 @@ exports.addSemester = (req, res)=> {
         }
     })
 };
+
+//Update Semester name 
+exports.updateSemester = (req, res)=>{
+    const id = req.params.id;
+    console.log(id)
+    return res.status(200).send({message: 'ok'});
+}
+
+//Delete Semester
+exports.deleteSemester = (req, res)=>{
+    const id = req.params.id;
+    console.log(id);
+    const removeSemester = `
+        DELETE FROM semesters
+        WHERE semesterId = ${id}
+    `
+
+    db.query(removeSemester, (err, result)=>{
+        if (err){
+            res.status(400).send({
+                message:'Invalid id ??'
+            })
+        } else {
+            console.log('Deleted');
+            res.send({
+                message: 'Row has been deleted'
+            })
+        }
+    })
+
+}
