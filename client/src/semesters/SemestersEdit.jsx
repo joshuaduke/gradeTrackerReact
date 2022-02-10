@@ -3,11 +3,8 @@ import jwt from 'jwt-decode';
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Semester from "./Semester";
-import Navbar from "../general/Navbar";
-import Header from "../general/Header";
 import { makeStyles } from "@mui/styles";
 import { Button, Container, Grid, Link, TextField } from "@mui/material";
-
 
 //Add a new semester and save it to the database
 //turn semester name to an input field, change semester name on user input 
@@ -70,25 +67,40 @@ export default function SemestersEdit(){
             setAddSemester(false);
 
         } else if (option === 'add'){
+            if(semesters.length === 0){
+                const result = semesters.length;
+                const credentials = {
+                    semesterName: newSemesterName,
+                    gpa: null,
+                    active: result === 0 ? true : false,
+                    id: currentStudent.id
+                }
 
-            const credentials = {
-                semesterName: newSemesterName,
-                gpa: null,
-                active: false,
-                id: currentStudent.id
-            }
-    
-            axios.post('http://localhost:5000/semesters', credentials)
-                .then( (result) =>{
-                    // console.log('ADDED DATA')
-                    // console.log(result.data);
-                    // const newSemesters = [...semesters, credentials];
-                    // setSemesters(newSemesters);
-                    window.location.href = '/';
+                axios.post('http://localhost:5000/semesters', credentials)
+                .then( () =>{
+                    console.log('Semester added successfully');
+                    window.location.href= '/';
                 })
                 .catch((err)=>{
                     console.log('Err', err);
                 })
+            } else {
+                const credentials = {
+                    semesterName: newSemesterName,
+                    gpa: null,
+                    active: 0,
+                    id: currentStudent.id
+                }
+
+                axios.post('http://localhost:5000/semesters', credentials)
+                .then( () =>{
+                    console.log('Semester added successfully');
+                    window.location.href= '/';
+                })
+                .catch((err)=>{
+                    console.log('Err', err);
+                })
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect ,useState } from "react";
 import Box from "@mui/material/Box";
 import Semester from "./Semester";
 import { makeStyles } from "@mui/styles";
@@ -22,8 +22,9 @@ const useStyles = makeStyles({
 export default function Semesters(){
     const classes = useStyles();
     const [semesters, setSemesters] = useState([]);
+    const [hasSemesters, setHasSemesters] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const token = localStorage.getItem('token')
         if(token) {
             console.log(token);
@@ -38,8 +39,13 @@ export default function Semesters(){
                 axios.get('http://localhost:5000/semesters', {headers: {Authorization: `${token}`}})
                     .then((result)=>{
                         console.log('result');
-                        console.log(result)
-                        setSemesters(result.data);
+                        console.log(result);
+
+                        if(result.data.length > 0){
+                            setHasSemesters(true)
+                            setSemesters(result.data);
+                        }
+
                     })
                     .catch((err)=>{
                         console.log(err);
@@ -94,6 +100,8 @@ export default function Semesters(){
             <Box textAlign={"center"} sx={{py:3}}>
                 <p>Tap a Semester to make it the current Semester</p>
             </Box>
+
+            {!hasSemesters && <Box textAlign={"center"}>Click <span>'Edit'</span> to add a new semester</Box>}
 
             <Logout />
             
