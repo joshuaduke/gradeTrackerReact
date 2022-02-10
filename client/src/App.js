@@ -7,7 +7,6 @@ import RequireAuth from './authentication/protectedRoutes'
 
 console.log(checkToken());
 
-
 function App() {
 
   return (
@@ -20,7 +19,7 @@ function App() {
             <Route path={path} element={<RequireAuth>{element}</RequireAuth>} key={index}/> 
           );
         })}
-          <Route path='*' element={<Navigate to='/' />}/> 
+        <Route path='*' element={<Navigate to='/' />}/> 
 
       </Routes>
     </Router>

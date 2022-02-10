@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     ListItemContainer:{
         display:"inline-block",
         width:"100%",
-        backgroundColor:  "#e4e4e4",
         padding:"20px 0",
         borderBottom: "1px solid #a8a8a8",
     }
@@ -24,32 +23,50 @@ export default function Semester(props){
     const [semesterName, setSemesterName] = useState(props.name);
     const [currentStudent, setCurrentStudent] = useState({});
 
-    // useEffect(()=>{
-    //     const token = localStorage.getItem('token')
-    //     if(token) {
-    //         console.log(token);
-    //         const student = jwt(token)
-    //         setCurrentStudent(student);
-
-    //         if(!student) {
-    //             localStorage.removeItem('token')
-    //             window.location.href = '/login'
-    //         } else {
-
-    //         }
-    //     } else {
-    //         window.location.href = '/login'
-    //     }
-    // },[])
-
     function handleDelete(){
         axios.delete(`http://localhost:5000/semesters/${props.id}`)
         .then((result)=>{
             window.location.href = '/';
         })
         .catch((err) => {
-            if (err) throw err
+            if (err) throw err;
         })
+    }
+
+    function handleUpdate(){
+        const updatedName = {
+            name: semesterName 
+        }
+
+        axios.patch(`http://localhost:5000/semesters/${props.id}`, updatedName)
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((err) => {
+            if(err) throw err;
+        })
+    }
+
+    function navigateCourse(id, isActive){
+        alert('Hello');
+        console.log(isActive)
+        if(isActive === 0){
+            const makeSemesterActive = {
+                active: 1
+            }
+
+            axios.patch(`http://localhost:5000/semesters/${id}`, makeSemesterActive)
+            .then((result) => {
+                console.log(result);
+                console.log('This semester is now active');
+                //redirect to Courses page 
+            })
+            .catch((err) => {
+                if(err) throw err;
+            })
+        } else {
+            console.log('This semester is currently active');
+        }
     }
 
 
@@ -64,7 +81,11 @@ export default function Semester(props){
                         onChange={(e) => setSemesterName(e.target.value)}
                         value={semesterName}
                     />
-                    <Button color="error" variant="text" onClick={handleDelete}>Delete</Button>
+                    <Box>
+                        <Button color="primary" variant="text" onClick={handleUpdate}>Update</Button>
+                        <Button color="error" variant="text" onClick={handleDelete}>Delete</Button>                        
+                    </Box>
+                    
                 </Container>
             </Box>
         </div>
@@ -85,14 +106,15 @@ export default function Semester(props){
         )
     } else {
         return(
-            <div >
-                <Link href="" underline="none" className={classes.ListItemContainer}>
-                    <Box >
+            <div style={ props.isActive === 1 ? {backgroundColor: '#A9A9A9'} : {backgroundColor: '#e4e4e4'}}>
+                {/* <Link href="" underline="none" className={classes.ListItemContainer}>
+
+                </Link> */}
+                <Box className={classes.ListItemContainer} onClick={() => navigateCourse(props.id, props.isActive)}>
                         <Container>
                             <ListItemText>{props.name}</ListItemText>            
                         </Container>
                     </Box>
-                </Link>
             </div>
         )     
     }
