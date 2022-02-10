@@ -39,7 +39,7 @@ export default function Semesters(){
                 axios.get('http://localhost:5000/semesters', {headers: {Authorization: `${token}`}})
                     .then((result)=>{
                         console.log('result');
-                        console.log(result);
+                        console.log(typeof result.data);
 
                         if(result.data.length > 0){
                             setHasSemesters(true)
@@ -55,27 +55,6 @@ export default function Semesters(){
             window.location.href = '/login'
         }
     }, [])
-
-    function navigateCourse(e, id, isActive){
-        alert('Hello');
-        if(isActive === 0){
-            const makeSemesterActive = {
-                active: 1
-            }
-
-            axios.patch(`http://localhost:5000/semesters/${id}`, makeSemesterActive)
-            .then((result) => {
-                console.log(result);
-                console.log('This semester is now active');
-                //redirect to Courses page 
-            })
-            .catch((err) => {
-                if(err) throw err;
-            })
-        } else {
-            console.log('This semester is currently active');
-        }
-    }
 
     return(
         <div>
@@ -106,7 +85,6 @@ export default function Semesters(){
             <Logout />
             
             {semesters.slice(0).reverse().map((semester) => <Semester 
-                                                                onClick={() => navigateCourse(semester.semesterId, semester.active)}
                                                                 key={semester.semesterId} 
                                                                 id={semester.semesterId} 
                                                                 name={semester.semesterName}

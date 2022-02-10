@@ -16,5 +16,6 @@ export const appRoutes = [
     { path: '/Semesters/edit', element: <SemestersEdit/>, protected: true},
     { path: '/login', element: <Login/>, protected: false},
     { path: '/register', element: <Register/>, protected: false},
-    { path: '/courses', element: <Courses/>, protected: true},
+    { path: '/courses/:semesterId', element: <Courses />, protected: true},
+    { path: '/courses/:semesterId/edit', element: <CoursesEdit />, protected: true},
 ]

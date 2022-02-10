@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../general/Navbar";
 import CourseInfo from "./CourseInfo";
 import CoursesStats from "./CoursesStats";
 import { Box, Button, Container, Grid, Link, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import jwt from 'jwt-decode';
+import axios from "axios";
+
 
 const useStyles = makeStyles({
     border:{
@@ -19,7 +24,42 @@ const useStyles = makeStyles({
 
 export default function Courses(){
     const classes = useStyles();
+    const navigate = useNavigate();
     const [addCourse, setAddCourse] = useState(false);
+
+    const { semesterId } = useParams();
+    const [courses, setCourses] = useState([]);
+    const [hasCourses, setHasCourses] = useState(false);
+
+    useEffect(()=>{
+        const token = localStorage.getItem('token')
+        if(token) {
+            console.log(token);
+            const student = jwt(token)
+            if(!student) {
+                localStorage.removeItem('token')
+                window.location.href = '/login'
+            } else {
+                // retrieve all courses for the semester id
+                console.log('Semester ID: '+  semesterId);
+                axios.get(`http://localhost:5000/courses/${semesterId}`, {headers: {Authorization: `${token}`}})
+                .then((courses)=>{
+                    console.log('Courses', courses.data);
+                    if(courses.data.length > 0){
+                        setHasCourses(true);
+                        setCourses(courses.data);
+                        
+                    }
+                })
+                .catch((err)=>{
+                    if (err) throw err;
+
+                })
+            }
+        } else {
+            window.location.href = '/login'
+        }
+    }, []);
 
     function displayAddCourse(){
         setAddCourse(true);
@@ -39,9 +79,9 @@ export default function Courses(){
                 <Container>
                     <Grid container sx={{py: 2}} textAlign="left">
                             <Grid item xs={4}>
-                                <Link href="/Courses" underline="none">
-                                    Course Name
-                                </Link>
+                                <Button onClick={() => navigate(-1)}>
+                                    Courses
+                                </Button>
                             </Grid>
                             <Grid item xs={4} textAlign="center">
                                 <p>Courses</p>
@@ -75,7 +115,18 @@ export default function Courses(){
                 </Box>
             }
 
-            <CourseInfo courseName="WEB 322" 
+            {courses.slice(0).reverse().map((course) => 
+                <CourseInfo key={course.courseId}
+                        id={course.courseId}
+                        courseName={course.courseCode} 
+                        gpa={course.gpa} 
+                        gradePercentage={course.courseGradePercentage} 
+                        gradeLetter={course.courseGradeLetter}
+                        deletable={true}
+                        />
+            )}
+
+            {/* <CourseInfo courseName="WEB 322" 
                         gpa="3.0" 
                         gradePercentage="88.9" 
                         gradeLetter="A"
@@ -87,7 +138,7 @@ export default function Courses(){
                             gradePercentage="95" 
                             gradeLetter="A+"
                             deletable={true}
-                            />
+                            /> */}
 
             <Navbar/>
         </div>

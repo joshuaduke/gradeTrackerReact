@@ -24,13 +24,17 @@ export default function Semester(props){
     const [currentStudent, setCurrentStudent] = useState({});
 
     function handleDelete(){
-        axios.delete(`http://localhost:5000/semesters/${props.id}`)
-        .then((result)=>{
-            window.location.href = '/';
-        })
-        .catch((err) => {
-            if (err) throw err;
-        })
+        if(props.isActive === 1){
+            alert('Cannot Delete an Active semester');
+        } else {
+            axios.delete(`http://localhost:5000/semesters/${props.id}`)
+            .then((result)=>{
+                window.location.href = '/';
+            })
+            .catch((err) => {
+                if (err) throw err;
+            })
+        }
     }
 
     function handleUpdate(){
@@ -48,7 +52,6 @@ export default function Semester(props){
     }
 
     function navigateCourse(id, isActive){
-        alert('Hello');
         console.log(isActive)
         if(isActive === 0){
             const makeSemesterActive = {
@@ -59,13 +62,14 @@ export default function Semester(props){
             .then((result) => {
                 console.log(result);
                 console.log('This semester is now active');
-                //redirect to Courses page 
+                window.location.href = `/courses/${id}`;
             })
             .catch((err) => {
                 if(err) throw err;
             })
         } else {
             console.log('This semester is currently active');
+            window.location.href = `/courses/${id}`;
         }
     }
 
@@ -83,7 +87,7 @@ export default function Semester(props){
                     />
                     <Box>
                         <Button color="primary" variant="text" onClick={handleUpdate}>Update</Button>
-                        <Button color="error" variant="text" onClick={handleDelete}>Delete</Button>                        
+                        <Button color="error" variant="text" onClick={() => handleDelete(props.isActive)}>Delete</Button>                        
                     </Box>
                     
                 </Container>

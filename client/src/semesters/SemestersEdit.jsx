@@ -152,7 +152,11 @@ export default function SemestersEdit(){
             
 
             {semesters.slice(0).reverse().map((semester) => 
-                <Semester key={semester.semesterId} name={semester.semesterName} id={semester.semesterId} deletable={true}/>
+                <Semester   key={semester.semesterId} 
+                            name={semester.semesterName} 
+                            id={semester.semesterId}
+                            isActive={semester.active}
+                            deletable={true}/>
             )}
 
             {/* <Navbar /> */}
