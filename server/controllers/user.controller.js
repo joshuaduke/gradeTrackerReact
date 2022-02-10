@@ -69,8 +69,57 @@ exports.addSemester = (req, res)=> {
 //Update Semester name 
 exports.updateSemester = (req, res)=>{
     const id = req.params.id;
-    console.log(id)
-    return res.status(200).send({message: 'ok'});
+    let updatedSemester;
+    console.log(req.body)
+    if(req.body.active === 0 || req.body.active == 1){
+        updatedSemester = {
+            active: req.body.active,
+            id: req.params.id
+        } 
+
+        const defaultActive = `
+        UPDATE semesters
+        SET active = ${0}
+        `
+        db.query(defaultActive, (err, result)=>{
+            if(err){
+                console.log(err);
+            } else {
+                console.log('all fields set to inactive')
+            } 
+        })
+
+        const mysqlUpdate = 
+        `UPDATE semesters
+        SET active = '${updatedSemester.active}'
+        WHERE semesterId = ${updatedSemester.id}
+        `
+        db.query(mysqlUpdate, (err, result)=>{
+            if(err) throw err;
+            console.log(result);
+            res.status(200).send({
+                message: 'Semester has been updated'
+            })
+        })
+    } else {
+        updatedSemester = {
+            id: req.params.id,
+            name: req.body.name
+        }
+        const mysqlUpdate = 
+        `UPDATE semesters
+        SET semesterName = '${updatedSemester.name}'
+        WHERE semesterId = ${updatedSemester.id}
+        `
+
+        db.query(mysqlUpdate, (err, result)=>{
+            if(err) throw err;
+            console.log(result);
+            res.status(200).send({
+                message: 'Semester has been updated'
+            })
+        })
+    }
 }
 
 //Delete Semester
