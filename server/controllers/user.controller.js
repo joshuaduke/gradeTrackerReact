@@ -13,18 +13,30 @@ exports.students = (req, res) => {
 exports.semesters = (req, res) => {
     console.log(req.userId);
     // res.status(200).send("semester Content.");
-    const getAllSemesters = `
+    const getAllStudentSemesters = `
         SELECT * FROM semesters
         WHERE id = ${req.userId}
     `
-    db.query(getAllSemesters, (err, result)=>{
+    db.query(getAllStudentSemesters, (err, result)=>{
         if (err) throw err;
         res.send(result)
     })
 };
 
-exports.class = (req, res) => {
-    res.status(200).send("Class Content.");
+exports.courses = (req, res) => {
+    console.log('User ID', req.userId);
+
+    const getAllStudentCourses = `
+        SELECT * FROM courses
+        WHERE id = ${req.userId}
+        AND semesterId = ${req.params.semesterId}
+    `
+
+    db.query(getAllStudentCourses, (err, courses)=>{
+        if (err) throw err;
+        res.send(courses)
+    })
+    // res.status(200).send("Courses Content.");
 };
 
 //Post

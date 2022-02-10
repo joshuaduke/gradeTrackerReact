@@ -3,8 +3,6 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieSession = require('cookie-session');
-const bcrypt = require('bcrypt');
-const mysql = require('mysql');
 const db = require('./config/db.config');  
 
 const port  = process.env.PORT || 5000;
@@ -17,6 +15,17 @@ app.use(cookieSession({
     secret: process.env.COOKIE_SECRET,
     httpOnly: true
 }))
+
+const queries = require('./sqlData');
+
+db.connect((err)=>{
+    if(err) throw err;
+    queries.insertCourses();
+    // queries.dropTable();
+    // queries.createCoursestable();
+    console.log('DB connected successfully');
+
+})
 
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);

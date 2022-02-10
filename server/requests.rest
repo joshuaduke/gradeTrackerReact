@@ -1,0 +1,13 @@
+POST http://localhost:5000/auth/logout
+Content-Type: application/json
+
+{
+    "email": "joshua"
+}
+
+###
+GET http://localhost:5000/semesters
+
+{
+    "userId": 14
+}

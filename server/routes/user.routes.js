@@ -9,10 +9,11 @@ module.exports = (app)=>{
         );
         next();
     });
+
   app.get('/home', controller.home);
   app.get('/students', authJwt.verifyToken, controller.students);
   app.get('/semesters', authJwt.verifyToken, controller.semesters);
-  app.get('/class', authJwt.verifyToken, controller.class);
+  app.get('/courses/:semesterId', authJwt.verifyToken, controller.courses);
 
   app.post('/semesters', controller.addSemester);
   app.patch('/semesters/:id', controller.updateSemester);
