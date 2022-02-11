@@ -16,6 +16,7 @@ module.exports = (app)=>{
 
 
   app.get('/courses/:semesterId', authJwt.verifyToken, controller.courses);
+  app.post('/courses/:semesterId', controller.addCourse);
   app.patch('/courses/:semesterId/:id', controller.updateCourse);
   app.delete('/courses/:semesterId/:id', controller.deleteCourse);
 

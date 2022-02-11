@@ -23,62 +23,6 @@ exports.semesters = (req, res) => {
     })
 };
 
-exports.courses = (req, res) => {
-    console.log('User ID', req.userId);
-
-    const getAllStudentCourses = `
-        SELECT * FROM courses
-        WHERE id = ${req.userId}
-        AND semesterId = ${req.params.semesterId}
-    `
-
-    db.query(getAllStudentCourses, (err, courses)=>{
-        if (err) throw err;
-        res.send(courses)
-    })
-    // res.status(200).send("Courses Content.");
-};
-
-exports.updateCourse = (req, res) => {
-    const semesterId = req.params.semesterId;
-    const courseId = req.params.id;
-
-    const updatedName = {
-        name: req.body.name
-    }
-
-    const updateQuery = 
-    `UPDATE courses
-        SET courseCode = '${updatedName.name}'
-        WHERE courseId = ${courseId}
-        AND semesterId = ${semesterId}
-    `
-
-    db.query(updateQuery, (err, updated)=>{
-        if(err) throw err;
-        console.log('Course has been updated ');
-    })
-    console.log(`Sid: ${semesterId}, Cid: ${courseId}`)
-}
-
-exports.deleteCourse = (req, res) =>{
-    const semesterId = req.params.semesterId;
-    const courseId = req.params.id;
-
-    const removeCourse = `
-        DELETE FROM courses
-        WHERE semesterId = ${semesterId}
-        AND   courseId = ${courseId}
-    `
-    db.query(removeCourse, (err, deleted) => {
-        if(err) throw err;
-        console.log('This course has been deleted');
-        res.send({
-            message: 'Row has been deleted'
-        })
-    })
-}
-
 //Post
 exports.addSemester = (req, res)=> {
 
@@ -197,3 +141,84 @@ exports.deleteSemester = (req, res)=>{
     })
 
 }
+
+/*  COURSES */
+
+//GET Courses
+exports.courses = (req, res) => {
+    console.log('User ID', req.userId);
+
+    const getAllStudentCourses = `
+        SELECT * FROM courses
+        WHERE id = ${req.userId}
+        AND semesterId = ${req.params.semesterId}
+    `
+
+    db.query(getAllStudentCourses, (err, courses)=>{
+        if (err) throw err;
+        res.send(courses)
+    })
+    // res.status(200).send("Courses Content.");
+};
+
+exports.addCourse = (req, res) => {
+    const newCourse = {
+        code: req.body.courseCode,
+        credit: req.body.credit,
+        semesterId: req.body.semesterId,
+        studentId: req.body.studentId
+    }
+    const newCourseSql = `
+        INSERT INTO courses (courseCode, gpa, courseCredit, courseGradePercentage, courseGradeLetter, courseTargetGrade, semesterId, id)
+        VALUES('${newCourse.code}', ${null}, ${newCourse.credit}, ${null}, ${null}, ${null}, ${newCourse.semesterId}, ${newCourse.studentId})
+    `
+
+    db.query(newCourseSql, (err, added)=>{
+        if(err) throw err;
+        console.log('Course has been added');
+        res.send({
+            message: 'Successfully added course'
+        })
+    })
+}
+
+exports.updateCourse = (req, res) => {
+    const semesterId = req.params.semesterId;
+    const courseId = req.params.id;
+
+    const updatedName = {
+        name: req.body.name
+    }
+
+    const updateQuery = 
+    `UPDATE courses
+        SET courseCode = '${updatedName.name}'
+        WHERE courseId = ${courseId}
+        AND semesterId = ${semesterId}
+    `
+
+    db.query(updateQuery, (err, updated)=>{
+        if(err) throw err;
+        console.log('Course has been updated ');
+    })
+    console.log(`Sid: ${semesterId}, Cid: ${courseId}`)
+}
+
+exports.deleteCourse = (req, res) =>{
+    const semesterId = req.params.semesterId;
+    const courseId = req.params.id;
+
+    const removeCourse = `
+        DELETE FROM courses
+        WHERE semesterId = ${semesterId}
+        AND   courseId = ${courseId}
+    `
+    db.query(removeCourse, (err, deleted) => {
+        if(err) throw err;
+        console.log('This course has been deleted');
+        res.send({
+            message: 'Row has been deleted'
+        })
+    })
+}
+
