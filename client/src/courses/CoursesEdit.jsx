@@ -30,12 +30,19 @@ export default function Courses(){
     const { semesterId } = useParams();
     const [courses, setCourses] = useState([]);
     const [hasCourses, setHasCourses] = useState(false);
+    const [courseCode, setCourseCode] = useState('');
+    const [courseCredit, setCourseCredit] = useState('');
+    const [studentId, setStudentId] = useState(0);
 
     useEffect(()=>{
         const token = localStorage.getItem('token')
         if(token) {
             console.log(token);
             const student = jwt(token)
+
+            console.log(student);
+            setStudentId(student.id);
+
             if(!student) {
                 localStorage.removeItem('token')
                 window.location.href = '/login'
@@ -70,6 +77,22 @@ export default function Courses(){
             setAddCourse(false);
         } else if (option === 'add'){
 
+            const newCourse = {
+                courseCode: courseCode,
+                credit: courseCredit,
+                semesterId: semesterId,
+                studentId: studentId
+            }
+
+            axios.post(`http://localhost:5000/courses/${semesterId}`, newCourse)
+                .then(()=>{
+                    console.log('Course added successfully');
+                    window.location.href = `http://localhost:3000/courses/${semesterId}`
+                })
+                .catch((err)=>{
+                    if(err) throw err;
+                    console.log('Error adding new course');
+                })
         }
     }
 
@@ -100,8 +123,17 @@ export default function Courses(){
                     <Button size="small" color={"error"} onClick={()=> handleNewCourse('cancel')}>Cancel</Button>
                     <TextField  sx={{mx:3}} 
                             id="standard-basic" 
-                            label="Semester Name" 
+                            label="Course Code" 
                             variant="standard" 
+                            onChange={(e) => setCourseCode(e.target.value)}
+                            value={courseCode}
+                            required/>
+                    <TextField  sx={{mx:3}} 
+                            id="standard-basic" 
+                            label="Course Credit" 
+                            variant="standard" 
+                            onChange={(e) => setCourseCredit(e.target.value)}
+                            value={courseCredit}
                             required/>
                     <Button size="small" onClick={()=> handleNewCourse('add')}>Add</Button>
                 </Box> }
