@@ -12,7 +12,7 @@ export default function Navbar(){
     const classes = useStyles();
 
     return(
-        <Box className={classes.NavContainer} position="absolute" bottom="0px" width="100%">
+        <Box className={classes.NavContainer} position="fixed" bottom="0px" width="100%">
             <Container>
                 <Grid container sx={{py:3}} textAlign={"center"}>
                     <Grid item xs={4}>

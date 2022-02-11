@@ -82,26 +82,13 @@ export default function Courses(){
             {courses.slice(0).reverse().map((course) => 
             <CourseInfo key={course.courseId}
                         id={course.courseId}
+                        semesterId={course.semesterId} 
                         courseName={course.courseCode} 
                         gpa={course.gpa} 
                         gradePercentage={course.courseGradePercentage} 
                         gradeLetter={course.courseGradeLetter}
                         />
             )}
-
-            {/* <Link href="/courses/1">
-                <CourseInfo courseName="WEB 322" 
-                        gpa="3.0" 
-                        gradePercentage="88.9" 
-                        gradeLetter="A"/>
-            </Link>
-
-            <Link href="/courses/2">
-                <CourseInfo courseName="GAM 537" 
-                            gpa="4.0" 
-                            gradePercentage="95" 
-                            gradeLetter="A+"/>
-            </Link> */}
 
             <Navbar/>
         </div>

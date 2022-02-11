@@ -59,7 +59,7 @@ export default function Courses(){
         } else {
             window.location.href = '/login'
         }
-    }, []);
+    }, [semesterId]);
 
     function displayAddCourse(){
         setAddCourse(true);
@@ -118,6 +118,7 @@ export default function Courses(){
             {courses.slice(0).reverse().map((course) => 
                 <CourseInfo key={course.courseId}
                         id={course.courseId}
+                        semesterId={course.semesterId} 
                         courseName={course.courseCode} 
                         gpa={course.gpa} 
                         gradePercentage={course.courseGradePercentage} 
@@ -125,20 +126,6 @@ export default function Courses(){
                         deletable={true}
                         />
             )}
-
-            {/* <CourseInfo courseName="WEB 322" 
-                        gpa="3.0" 
-                        gradePercentage="88.9" 
-                        gradeLetter="A"
-                        deletable={true}
-                        />
-
-            <CourseInfo courseName="GAM 537" 
-                            gpa="4.0" 
-                            gradePercentage="95" 
-                            gradeLetter="A+"
-                            deletable={true}
-                            /> */}
 
             <Navbar/>
         </div>

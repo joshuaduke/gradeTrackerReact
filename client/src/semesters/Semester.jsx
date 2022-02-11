@@ -42,13 +42,17 @@ export default function Semester(props){
             name: semesterName 
         }
 
-        axios.patch(`http://localhost:5000/semesters/${props.id}`, updatedName)
-        .then((result) => {
-            console.log(result);
-        })
-        .catch((err) => {
-            if(err) throw err;
-        })
+        if(updatedName !== ''){
+            axios.patch(`http://localhost:5000/semesters/${props.id}`, updatedName)
+            .then((result) => {
+                console.log(result);
+            })
+            .catch((err) => {
+                if(err) throw err;
+            })
+        } else {
+            alert('You cannot change the name to nothing');
+        }
     }
 
     function navigateCourse(id, isActive){

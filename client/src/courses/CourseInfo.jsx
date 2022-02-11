@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Grid, Box, Button, TextField } from "@mui/material";
 
 import { makeStyles } from "@mui/styles";
+import axios from "axios";
 
 const useStyles = makeStyles({
     container:{
@@ -12,12 +13,40 @@ const useStyles = makeStyles({
 
 export default function CourseInfo(props){
     const classes = useStyles();
-    const [newCourseName, setNewCourseName] = useState();
+    const [newCourseName, setNewCourseName] = useState(props.courseName);
+
+    function handleUpdate(){
+        if(newCourseName !== ''){
+            const updatedCourseName = {
+                name: newCourseName
+            }
+            axios.patch(`http://localhost:5000/courses/${props.semesterId}/${props.id}`, updatedCourseName)
+                .then(()=>{
+                    console.log('Course has been updated')
+                })
+                .catch((err) => {
+                    if (err) throw err;
+                })
+        } else {
+            alert('You cannot change the name to nothing');
+        }
+    }
+
+    function handleDelete(){
+        axios.delete(`http://localhost:5000/courses/${props.semesterId}/${props.id}`)
+            .then(()=>{
+                console.log('Course has been deleted');
+                window.location.href = `/courses/${props.semesterId}`
+            })
+            .catch((err)=>{
+                if (err) throw err;
+            })
+    }
 
     if(props.deletable === true){
         return(
             <Box className={classes.container}>
-                <Container sx={{display: 'flex', justifyContent: 'space-between'}}>
+                <Container sx={{display: 'flex', justifyContent: 'space-between', py:4}}>
                     <TextField 
                         label="Course Name"
                         onChange={(e) => setNewCourseName(e.target.value)}
@@ -25,8 +54,14 @@ export default function CourseInfo(props){
                     />
 
                     <Box>
-                        <Button color="primary" variant="text">Upadte</Button>
-                        <Button color="error" variant="text">Delete</Button>
+                        <Button color="primary" 
+                                variant="text"
+                                onClick={handleUpdate}>
+                                Update</Button>
+                        <Button color="error" 
+                                variant="text"
+                                onClick={handleDelete}>
+                                Delete</Button>
                     </Box>
                 </Container>
             </Box>
