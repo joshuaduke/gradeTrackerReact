@@ -13,7 +13,11 @@ module.exports = (app)=>{
   app.get('/home', controller.home);
   app.get('/students', authJwt.verifyToken, controller.students);
   app.get('/semesters', authJwt.verifyToken, controller.semesters);
+
+
   app.get('/courses/:semesterId', authJwt.verifyToken, controller.courses);
+  app.patch('/courses/:semesterId/:id', controller.updateCourse);
+  app.delete('/courses/:semesterId/:id', controller.deleteCourse);
 
   app.post('/semesters', controller.addSemester);
   app.patch('/semesters/:id', controller.updateSemester);

@@ -39,6 +39,46 @@ exports.courses = (req, res) => {
     // res.status(200).send("Courses Content.");
 };
 
+exports.updateCourse = (req, res) => {
+    const semesterId = req.params.semesterId;
+    const courseId = req.params.id;
+
+    const updatedName = {
+        name: req.body.name
+    }
+
+    const updateQuery = 
+    `UPDATE courses
+        SET courseCode = '${updatedName.name}'
+        WHERE courseId = ${courseId}
+        AND semesterId = ${semesterId}
+    `
+
+    db.query(updateQuery, (err, updated)=>{
+        if(err) throw err;
+        console.log('Course has been updated ');
+    })
+    console.log(`Sid: ${semesterId}, Cid: ${courseId}`)
+}
+
+exports.deleteCourse = (req, res) =>{
+    const semesterId = req.params.semesterId;
+    const courseId = req.params.id;
+
+    const removeCourse = `
+        DELETE FROM courses
+        WHERE semesterId = ${semesterId}
+        AND   courseId = ${courseId}
+    `
+    db.query(removeCourse, (err, deleted) => {
+        if(err) throw err;
+        console.log('This course has been deleted');
+        res.send({
+            message: 'Row has been deleted'
+        })
+    })
+}
+
 //Post
 exports.addSemester = (req, res)=> {
 

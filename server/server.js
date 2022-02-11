@@ -20,9 +20,10 @@ const queries = require('./sqlData');
 
 db.connect((err)=>{
     if(err) throw err;
-    queries.insertCourses();
+    
     // queries.dropTable();
     // queries.createCoursestable();
+    // queries.insertCourses();
     console.log('DB connected successfully');
 
 })
