@@ -55,25 +55,25 @@ export default function Semester(props){
         }
     }
 
-    function navigateCourse(id, isActive){
+    function navigateCourse(semesterId, isActive){
         console.log(isActive)
         if(isActive === 0){
             const makeSemesterActive = {
                 active: 1
             }
 
-            axios.patch(`http://localhost:5000/semesters/${id}`, makeSemesterActive)
+            axios.patch(`http://localhost:5000/semesters/${semesterId}`, makeSemesterActive)
             .then((result) => {
                 console.log(result);
                 console.log('This semester is now active');
-                window.location.href = `/courses/${id}`;
+                window.location.href = `/${semesterId}`;
             })
             .catch((err) => {
                 if(err) throw err;
             })
         } else {
             console.log('This semester is currently active');
-            window.location.href = `/courses/${id}`;
+            window.location.href = `/${semesterId}`;
         }
     }
 

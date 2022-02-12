@@ -1,10 +1,13 @@
-import React from 'react'
-import { Box, Container, Grid, Link } from '@mui/material'
-import Header from '../general/Header'
+import React, { useEffect, useState } from 'react'
+import { Box, Container, Grid, Link, Button } from '@mui/material';
 import Navbar from '../general/Navbar'
 import ClassStats from './ClassStats'
-import Assignment from './Assignment'
+import Task from './Task'
 import { makeStyles } from '@mui/styles'
+import { useParams } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import jwt from 'jwt-decode';
 
 const useStyles = makeStyles({
     border:{
@@ -15,23 +18,65 @@ const useStyles = makeStyles({
     },
     headerContainer:{
         backgroundColor:  "#e4e4e4",
+    },
+    cursor:{
+        cursor: 'pointer',
     }
 })
 
 export default function Class(){
-    const classes = useStyles()
+    const classes = useStyles();
+    const { semesterId, courseId } = useParams();
+    const [tasks, setTasks] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        console.log('Course ID:' + courseId)
+        const token = localStorage.getItem('token')
+
+        if(token) {
+            console.log(token);
+            const student = jwt(token)
+            if(!student) {
+                localStorage.removeItem('token')
+                window.location.href = '/login'
+            } else {
+                // retrieve all tasks by semester and course id
+                console.log('Course Id again: '+ courseId);
+                axios.get(`http://localhost:5000/courses/${courseId}`, {headers: {Authorization: `${token}`}})
+                .then((tasks)=>{
+                    console.log(tasks);
+                    setTasks(tasks.data);
+                    console.log(tasks);
+                })
+                .catch((err)=>{
+                    if(err) throw err;
+                })
+
+            }
+        } else {
+            window.location.href = '/login'
+        }
+
+    }, [])
+
+    console.log(`Semester: ${semesterId}, Course: ${courseId}`)
+
     return(
         <Box>
             <header className={classes.headerContainer}>
                 <Container>
                     <Grid container sx={{py: 2}} textAlign="left">
                             <Grid item xs={4}>
-                                <Link href="/Courses" underline="none">
+                                {/* <Button onClick={() => navigate(-1)}>
+                                    Courses
+                                </Button> */}
+                                <Link className={classes.cursor} onClick={() => navigate(-1)} underline="none">
                                     Courses
                                 </Link>
                             </Grid>
                             <Grid item xs={4} textAlign="center">
-                                Class Name
+                                {courseId}
                             </Grid>
                             <Grid item xs={4} textAlign="right">
                                 <Link href="/Courses/1/edit">Edit</Link>                    
@@ -40,9 +85,17 @@ export default function Class(){
                 </Container>
             </header>
             <ClassStats/>
-            <Assignment title="Assignment 1"/>
-            <Assignment title="Assignment 2"/>
-            <Assignment title="Assignment 3"/>
+
+            {tasks.slice(0).reverse().map((task) => 
+                <Task key={task.taskId}
+                        id={task.taskId}
+                        courseId={task.courseId} 
+                        name={task.taskName} 
+                        weight={task.taskWeight} 
+                        grade={task.taskGrade} 
+                        />
+            )}
+
             <Navbar />
         </Box>
     )

@@ -4,7 +4,7 @@ import {Box, Button, TextField, Container,
         RadioGroup, FormControl,
         Radio, FormControlLabel} from '@mui/material';
 import Navbar from '../general/Navbar';
-import Assignment from './Assignment';
+import Task from './Task';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
@@ -151,9 +151,9 @@ export default function Class(){
                 </Box>
             }
 
-            <Assignment title="Assignment 1" editable={true}/>
-            <Assignment title="Assignment 2" editable={true}/>
-            <Assignment title="Assignment 3" editable={true}/>
+            <Task title="Assignment 1" editable={true}/>
+            <Task title="Assignment 2" editable={true}/>
+            <Task title="Assignment 3" editable={true}/>
             <Navbar />
         </Box>
     )

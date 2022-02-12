@@ -39,7 +39,7 @@ export default function Courses(){
             } else {
                 // retrieve all courses for the semester id
                 console.log('Semester ID: '+  semesterId);
-                axios.get(`http://localhost:5000/courses/${semesterId}`, {headers: {Authorization: `${token}`}})
+                axios.get(`http://localhost:5000/${semesterId}`, {headers: {Authorization: `${token}`}})
                 .then((courses)=>{
                     console.log('Courses', courses.data);
                     if(courses.data.length > 0){
@@ -77,10 +77,12 @@ export default function Courses(){
                         </Grid>
                 </Container>
             </header>
-            <CoursesStats/>
+
+            <CoursesStats />
 
             {courses.slice(0).reverse().map((course) => 
-            <CourseInfo key={course.courseId}
+                <Link key={course.courseId} href={`/courses/${semesterId}/${course.courseId}`} underline="none">
+                    <CourseInfo 
                         id={course.courseId}
                         semesterId={course.semesterId} 
                         courseName={course.courseCode} 
@@ -88,6 +90,7 @@ export default function Courses(){
                         gradePercentage={course.courseGradePercentage} 
                         gradeLetter={course.courseGradeLetter}
                         />
+                </Link>
             )}
 
             <Navbar/>
