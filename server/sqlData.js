@@ -1,5 +1,38 @@
 const db = require('./config/db.config');
 
+
+// Tasks
+function insertTask(){
+    let values = [
+        ['Lab 1', '10', null, 16],
+        ['Midterm', '40', null, 16],
+        ['Final Exam', '50', null, 16],
+    ]
+    const insertIntoTable =
+        'INSERT INTO Tasks (taskName, taskWeight, taskGrade, courseId) VALUES ?'
+        db.query(insertIntoTable, [values], (err , result)=>{
+            if(err) throw err;
+            console.log('Tasks have been entered');
+        })
+}
+
+function createTasksTable(){
+    const createTasks = 
+    `CREATE TABLE Tasks(
+        taskId      INT PRIMARY KEY AUTO_INCREMENT,
+        taskName    VARCHAR(45) NOT NULL,
+        taskWeight  VARCHAR(5) NOT NULL,
+        taskGrade   VARCHAR(5),
+        courseId    INT NOT NULL,
+        FOREIGN KEY (courseId) REFERENCES courses(courseId)
+    )`
+
+    db.query(createTasks, (err, result)=>{
+        if(err) throw err;
+        console.log('Tasks table has been created');
+    })
+}
+
 // Courses
 function dropTable(){
     db.query('DROP TABLE courses', (err, dropped)=>{
@@ -104,4 +137,6 @@ module.exports = {
     createCoursestable,
     insertCourses,
     dropTable,
+    createTasksTable,
+    insertTask,
 }

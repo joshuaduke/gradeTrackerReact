@@ -23,7 +23,8 @@ db.connect((err)=>{
     
     // queries.dropTable();
     // queries.createCoursestable();
-    // queries.insertCourses();
+    // queries.insertTask();
+    // queries.createTasksTable();
     console.log('DB connected successfully');
 
 })

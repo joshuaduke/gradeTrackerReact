@@ -10,6 +10,8 @@ exports.students = (req, res) => {
 
 };
 
+/*   SEMESTERS   */
+
 exports.semesters = (req, res) => {
     console.log(req.userId);
     // res.status(200).send("semester Content.");
@@ -161,6 +163,22 @@ exports.courses = (req, res) => {
     // res.status(200).send("Courses Content.");
 };
 
+//getOneCourse
+exports.oneCourse = (req, res) =>{
+    // console.log('User ID', req.userId);
+
+    const getOneCourses = `
+        SELECT * FROM courses
+        WHERE courseId = ${req.params.courseId}
+        AND semesterId = ${req.params.semesterId}
+    `
+
+    db.query(getOneCourses, (err, course)=>{
+        if (err) throw err;
+        res.send(course)
+    })
+}
+
 exports.addCourse = (req, res) => {
     const newCourse = {
         code: req.body.courseCode,
@@ -220,5 +238,24 @@ exports.deleteCourse = (req, res) =>{
             message: 'Row has been deleted'
         })
     })
+}
+
+/*  TASKS   */
+exports.tasks = (req, res) => {
+    console.log(req);
+    console.log('User ID', req.userId);
+
+    const getAllTasks = `
+        SELECT * FROM Tasks
+        WHERE courseId = '${req.params.courseId}';
+    `
+
+    db.query(getAllTasks, (err, tasks)=>{
+        if (err){
+            res.status(404).send({message: 'Tasks not found'})
+        }
+        res.send(tasks)
+    })
+    // res.status(200).send("Courses Content.");
 }
 
