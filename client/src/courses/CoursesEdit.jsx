@@ -49,7 +49,7 @@ export default function Courses(){
             } else {
                 // retrieve all courses for the semester id
                 console.log('Semester ID: '+  semesterId);
-                axios.get(`http://localhost:5000/courses/${semesterId}`, {headers: {Authorization: `${token}`}})
+                axios.get(`http://localhost:5000/${semesterId}`, {headers: {Authorization: `${token}`}})
                 .then((courses)=>{
                     console.log('Courses', courses.data);
                     if(courses.data.length > 0){
@@ -159,7 +159,7 @@ export default function Courses(){
                         />
             )}
 
-            <Navbar/>
+            <Navbar id={semesterId}/>
         </div>
     )
 }

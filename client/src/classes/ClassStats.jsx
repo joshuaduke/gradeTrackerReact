@@ -42,7 +42,7 @@ export default function ClassStats(){
                 })
             }
         } else {
-            window.location.href = '/login'
+            window.location.href = '/login';
         }
     }, [])
 

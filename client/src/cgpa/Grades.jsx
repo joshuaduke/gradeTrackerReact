@@ -48,7 +48,7 @@ export default function Semesters(){
             <Semester name="Winter 2022" displayCgpa={true}/>
             <Semester name="Fall 2021" displayCgpa={true}/>
             <Semester name="Summer 2021" displayCgpa={true}/>
-            <Navbar/>
+            <Navbar />
         </div>
     )
 }

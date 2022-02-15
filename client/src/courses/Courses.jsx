@@ -54,7 +54,7 @@ export default function Courses(){
                 })
             }
         } else {
-            window.location.href = '/login'
+            window.location.href = '/login';
         }
     }, []);
 
@@ -93,7 +93,7 @@ export default function Courses(){
                 </Link>
             )}
 
-            <Navbar/>
+            <Navbar id={semesterId}/>
         </div>
     )
 }

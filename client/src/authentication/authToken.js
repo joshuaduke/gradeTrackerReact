@@ -4,7 +4,7 @@ export const checkToken = () => {
         console.log('null');
         return false;
     } else {
-        console.log('token is here')
+        console.log('token is true')
         return true;
     }
 }

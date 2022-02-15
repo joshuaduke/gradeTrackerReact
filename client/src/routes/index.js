@@ -5,7 +5,8 @@ import SemestersEdit from '../semesters/SemestersEdit'
 import Courses from '../courses/Courses'
 import CoursesEdit from '../courses/CoursesEdit'
 import Class from '../classes/Class'
-import ClassEidt from '../classes/ClassEdit'
+import ClassEdit from '../classes/ClassEdit'
+import TaskEdit from '../classes/TaskEdit'
 import Scales from '../cgpa/Scales'
 import Grades from '../cgpa/Grades'
 import Settings from '../settings/Settings'
@@ -19,4 +20,7 @@ export const appRoutes = [
     { path: '/:semesterId', element: <Courses />, protected: true},
     { path: '/courses/:semesterId/edit', element: <CoursesEdit />, protected: true},
     { path: '/courses/:semesterId/:courseId', element: <Class />, protected: true},
+    { path: '/courses/:semesterId/edit', element: <CoursesEdit />, protected: true},
+    { path: '/courses/:semesterId/:courseId/edit', element: <ClassEdit />, protected: true},
+    { path: '/tasks/:taskId/', element: <TaskEdit />, protected: true},
 ]

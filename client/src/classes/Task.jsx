@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@mui/system";
-import { Container, Button, TextField } from "@mui/material";
+import { Box, Link, Container, Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useParams } from "react-router-dom";
 
@@ -18,18 +17,25 @@ export default function Task(props){
     const { semesterId, courseId } = useParams();
     const [labelName, setLabelName] = useState('Need');
     const [changeSpan, setChangeSpan] = useState(' %');
-    const [grade, setGrade] = useState(props.weight)
+    const [weight, setWeight] = useState(props.weight);
+    const [dontBtn, setDontBtn] = useState(false);
 
     function addGrade(){
         setLabelName('Grade');
         setChangeSpan(' /100');
-        setGrade('');
+        setWeight('');
+        setDontBtn(true)
     }
 
     function afterFocus(){
         setLabelName('Need');
         setChangeSpan(' %');
-        setGrade(props.weight);
+        setWeight(props.weight);
+        setDontBtn(false);
+    }
+
+    function handleDelete(){
+        alert('Clicked');
     }
 
     if(props.editable === true){
@@ -38,23 +44,23 @@ export default function Task(props){
             <Container className={classes.border}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                     <Box>
-                        <Button sx={{mr:2}} color="error" variant="text">Delete</Button>
+                        {/* <Button sx={{mr:2}} color="error" variant="text" onClick={handleDelete}>Delete</Button> */}
                         {props.name}
                     </Box>
                     <Box>
-                        <form>
-                            <span>Weight</span>
-                            <br/>
-                            {/* <span><input type="number" />%</span> */}
-                            <span>
-                                <TextField 
-                                    className={classes.input}
-                                    name="weight"
-                                    size="small"
-                                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}/>  %
-                            </span>
-                        </form>
-                    </Box>
+                            <form>
+                                <span>Weight</span>
+                                <br/>
+                                {/* <span><input type="number" />%</span> */}
+                                <span>
+                                    <TextField 
+                                        className={classes.input}
+                                        value={weight}
+                                        size="small"
+                                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}/>  %
+                                </span>
+                            </form>
+                        </Box>
                 </Box>
             </Container>
         )
@@ -76,13 +82,16 @@ export default function Task(props){
                                     className={classes.input}
                                     label={labelName}
                                     
-                                    value={grade}
+                                    value={weight}
                                     size="small"
                                     id="outline-required"
                                     onFocus={addGrade}
                                     onBlur={afterFocus}
                                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}/>
                                     {changeSpan}
+
+                            { dontBtn && <Button>Done</Button>}
+                                
                             </span>
                         </form>
                     </Box>

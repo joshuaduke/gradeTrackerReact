@@ -36,7 +36,7 @@ export default function CourseInfo(props){
         axios.delete(`http://localhost:5000/courses/${props.semesterId}/${props.id}`)
             .then(()=>{
                 console.log('Course has been deleted');
-                window.location.href = `/courses/${props.semesterId}`
+                window.location.href = `/${props.semesterId}`
             })
             .catch((err)=>{
                 if (err) throw err;

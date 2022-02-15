@@ -79,11 +79,12 @@ export default function Class(){
                                 {courseId}
                             </Grid>
                             <Grid item xs={4} textAlign="right">
-                                <Link href="/Courses/1/edit">Edit</Link>                    
+                                <Link href={`/courses/${semesterId}/${courseId}/edit`}>Edit</Link>                    
                             </Grid>
                         </Grid>
                 </Container>
             </header>
+            
             <ClassStats/>
 
             {tasks.slice(0).reverse().map((task) => 
@@ -96,7 +97,7 @@ export default function Class(){
                         />
             )}
 
-            <Navbar />
+            <Navbar id={semesterId} />
         </Box>
     )
 }
