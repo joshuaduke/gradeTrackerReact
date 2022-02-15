@@ -17,7 +17,13 @@ module.exports = (app)=>{
 
   app.get('/:semesterId', authJwt.verifyToken, controller.courses);
   app.get('/courses/:semesterId/:courseId', authJwt.verifyToken, controller.oneCourse);
+
   app.get('/courses/:courseId', authJwt.verifyToken, controller.tasks);
+  app.get('/task/:taskId', authJwt.verifyToken, controller.oneTask)
+  app.post('/courses/:courseId', controller.newTask);
+  app.post('/courses/many/:courseId', controller.addTasks);
+  app.patch('/task/:taskId', controller.updateTask)
+  app.delete('/courses/:taskId', controller.deleteTask);
 
   
   app.post('/courses/:semesterId', controller.addCourse);

@@ -14,7 +14,7 @@ verifyToken = (req, res, next) => {
         if(err){
             return res.status(401).send({
                 //should redirect to login page
-                message: 'Unathorized!',
+                message: 'Unathorized! or Expired!',
             });
         }
         req.userId = decoded.id;

@@ -259,3 +259,100 @@ exports.tasks = (req, res) => {
     // res.status(200).send("Courses Content.");
 }
 
+exports.oneTask = (req, res) =>{
+    console.log(req.params.taskId);
+    const getOneTask = `
+        SELECT * FROM Tasks
+        WHERE taskId = ${req.params.taskId}
+    `
+
+    db.query(getOneTask, (err, result)=>{
+        if(err) {
+            res.send({message: 'Get one task error'})
+        }
+
+        console.log('Retrieved the task');
+        res.send(result);
+    })
+}
+
+exports.newTask = (req, res) => {
+    const newTask = {
+        name: req.body.name,
+        weight: req.body.weight,
+        courseId: req.params.courseId
+    }
+
+    const addTaskSql = `INSERT INTO Tasks (taskName, taskWeight, taskGrade, courseId)
+                        VALUE ('${newTask.name}', '${newTask.weight}', ${null}, ${newTask.courseId})`
+    
+    db.query(addTaskSql, (err, result)=>{
+        if(err) throw err;
+        return res.send({message: 'Task successfully added'});    
+    })
+    
+}
+
+exports.addTasks = (req, res) =>{
+    let data = [];
+
+    req.body.forEach(element => {
+        let taskValue = [element.name, `${element.weight}`, null, parseInt(req.params.courseId)]
+        data.push(taskValue)
+    });
+
+    console.log(data);
+
+    const insertSQL = `INSERT INTO Tasks (taskName, taskweight, taskGrade, courseId) VALUES ?`
+    db.query(insertSQL, [data], (err, result)=>{
+        if(err) throw err;
+        console.log('Tasks have been added');
+        return res.send({message: 'Tasks successfully added'});    
+    })
+}
+
+exports.updateTask = (req, res) => {
+    const taskId = req.params.taskId;
+
+    const updatedTask = {
+        name: req.body.name,
+        weight: req.body.weight
+    }
+
+    const updateQuery = 
+    `UPDATE Tasks
+        SET taskName = '${updatedTask.name}', taskWeight = '${updatedTask.weight}'
+        WHERE taskId = ${taskId}
+    `
+
+    db.query(updateQuery, (err, updated)=>{
+        if(err) throw err;
+        console.log('Task has been updated ');
+        res.send({
+            message: 'Task Has been updated'
+        })
+    })
+    
+}
+
+exports.deleteTask = (req, res) =>{
+    const id = req.params.taskId;
+    console.log(id);
+    const removeTask = `
+        DELETE FROM Tasks
+        WHERE taskId = ${id}
+    `
+
+    db.query(removeTask, (err, result)=>{
+        if (err){
+            res.status(400).send({
+                message:'Invalid id ??'
+            })
+        } else {
+            console.log('Deleted');
+            res.send({
+                message: 'Row has been deleted'
+            })
+        }
+    })
+}
