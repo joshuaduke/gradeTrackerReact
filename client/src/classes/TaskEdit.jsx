@@ -69,7 +69,7 @@ export default function TaskEdit(){
         axios.patch(`http://localhost:5000/task/${taskId}`, updatedTask)
             .then(()=>{
                 console.log('Task has been updated succesfully');
-                navigate(-1)
+                navigate(-1);
             })
             .catch((err) =>{
                 if (err) throw err;

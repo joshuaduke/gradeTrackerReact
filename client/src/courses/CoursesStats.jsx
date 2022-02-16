@@ -27,13 +27,13 @@ export default function CoursesStats(){
             <Grid className={classes.border} item xs={4}>
                 <Box>
                     <p>CGPA</p>
-                    <p>3.29</p>
+                    <p>Insert Data</p>
                 </Box>
             </Grid>
             <Grid className={classes.border} item xs={4}>
                 <Box>
                     <p>GPA</p>
-                    <p>3.1</p>
+                    <p>Insert Data</p>
                 </Box>
 
 
@@ -41,7 +41,7 @@ export default function CoursesStats(){
             <Grid item xs={4}>
                 <Box>
                     <p>AVG</p>
-                    <p>73.95%</p>
+                    <p>Insert Data</p>
                 </Box>
             </Grid>
         </Grid>

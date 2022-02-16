@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { makeStyles } from "@mui/styles";
 import { useParams } from "react-router-dom";
@@ -19,6 +19,7 @@ export default function ClassStats(){
     const classes = useStyles();
     const { semesterId, courseId } = useParams();
     const [course, setCourse] = useState({});
+    const [newTargetGrade, setNewTargetGrade] = useState('');
 
     useEffect(()=>{
         const token = localStorage.getItem('token')
@@ -46,6 +47,19 @@ export default function ClassStats(){
         }
     }, [])
 
+    function updateCourseTarget(){
+        const updatedTargetGrade = {
+            targetGrade: newTargetGrade
+        }
+        axios.patch(`http://localhost:5000/updateTargetGrade/${courseId}`, updatedTargetGrade)
+            .then(() => {
+                console.log('Target Grade has been updated')
+            })
+            .catch((err) =>{
+                if (err) throw err;
+            })
+    }
+
     return(
         <Grid container 
                 textAlign={"center"} 
@@ -54,7 +68,7 @@ export default function ClassStats(){
             <Grid className={classes.border} item xs={3}>
                 <Box>
                     <p>CGPA</p>
-                    <p>3.29</p>
+                    <p>Insert Data</p>
                 </Box>
             </Grid>
             <Grid className={classes.border} item xs={3}>
@@ -73,6 +87,14 @@ export default function ClassStats(){
             <Grid item xs={3}>
                 <Box>
                     <p>Target</p>
+                    <TextField 
+                        id="standard-basic"
+                        variant="standard"
+                        size="small"
+                        value={newTargetGrade}
+                        onChange={(e) => setNewTargetGrade(e.target.value)}
+                        onBlur={updateCourseTarget}
+                    />
                     <p>{course.courseTargetGrade}</p>
                 </Box>
             </Grid>

@@ -136,7 +136,7 @@ export default function Class(){
                         })
                         .catch((err)=>{
                             if(err) throw err;
-                            window.location.href = '/login'
+                            window.location.href = '/login';
                         })
                 })
                 .catch((err)=>{
@@ -175,8 +175,6 @@ export default function Class(){
                             setTotalWeight(newTotalWeight += parseInt(task.taskWeight))
                             console.log(totalWeight);
                         });
-
-
                     })
                     .catch((err)=>{
                         if(err) throw err;
@@ -215,7 +213,7 @@ export default function Class(){
                                 Class Name
                             </Grid>
                             <Grid item xs={4} textAlign="right">
-                                <Link href="/Courses/1">Done</Link>                    
+                               <span></span>                   
                             </Grid>
                         </Grid>
                 </Container>
@@ -273,20 +271,17 @@ export default function Class(){
                                         label="Task Name" 
                                         name='groupedTaskName' 
                                         onChange={(e) => setTaskName(e.target.value)}
-                                        value={taskName}
                                         size='small'/>
                             <TextField  variant="standard" 
                                         label="Quantity" 
                                         name="quantity" 
                                         onChange={(e) => setTaskQty(e.target.value)}
-                                        value={taskQty}
                                         size='small'/>
                             <TextField  variant="standard" 
                                         label="Total Weight" 
                                         name="totalWeight" 
                                         size='small'
                                         onChange={(e) => setGroupedWeight(e.target.value)}
-                                        value={groupedWeight}
                                         />
 
                         </Box>
@@ -308,10 +303,10 @@ export default function Class(){
             }
 
             {tasks.slice(0).reverse().map((task) => 
-                <>
+                <div key={task.taskId}>
                     <Button sx={{mr:2}} color="error" variant="text" onClick={() => handleDelete(task.taskId)}>Delete</Button>
-                    <Link href={`/tasks/${task.taskId}`}>
-                        <Task key={task.taskId}
+                    <Link href={`/tasks/${task.taskId}`} underline="none">
+                        <Task 
                                 id={task.taskId}
                                 courseId={task.courseId} 
                                 name={task.taskName} 
@@ -320,7 +315,7 @@ export default function Class(){
                                 editable={true}
                                 />
                     </Link>
-                </>
+                </div>
             )}
 
             <Navbar id={semesterId}/>

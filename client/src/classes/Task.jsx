@@ -51,14 +51,8 @@ export default function Task(props){
                             <form>
                                 <span>Weight</span>
                                 <br/>
-                                {/* <span><input type="number" />%</span> */}
-                                <span>
-                                    <TextField 
-                                        className={classes.input}
-                                        value={weight}
-                                        size="small"
-                                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}/>  %
-                                </span>
+                                <p> {weight} % </p>
+
                             </form>
                         </Box>
                 </Box>

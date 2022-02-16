@@ -84,10 +84,10 @@ export default function Courses(){
                 studentId: studentId
             }
 
-            axios.post(`http://localhost:5000/courses/${semesterId}`, newCourse)
+            axios.post(`http://localhost:5000/courses/addCourse/${semesterId}`, newCourse)
                 .then(()=>{
                     console.log('Course added successfully');
-                    window.location.href = `http://localhost:3000/courses/${semesterId}`
+                    window.location.href = `http://localhost:3000/${semesterId}`
                 })
                 .catch((err)=>{
                     if(err) throw err;

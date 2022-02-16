@@ -70,3 +70,13 @@ export default function CurrentScale(){
         </div>
     )
 }
+
+//  { name: 'A+', percentage: 90.0, gpa: 4.00 },
+//  { name: 'A',  percentage: 80.0, gpa: 4.00 },
+//  { name: 'B+', percentage: 75.0, gpa: 3.50 },
+//  { name: 'B',  percentage: 70.0, gpa: 3.00 },
+//  { name: 'C+', percentage: 65.0, gpa: 2.50 },
+//  { name: 'C',  percentage: 60.0, gpa: 2.00 },
+//  { name: 'D+', percentage: 55.0, gpa: 1.50 },
+//  { name: 'D',  percentage: 50.0, gpa: 1.00 },
+//  { name: 'F',  percentage: 0.00, gpa: 0.00 },
