@@ -222,6 +222,25 @@ exports.updateCourse = (req, res) => {
     console.log(`Sid: ${semesterId}, Cid: ${courseId}`)
 }
 
+exports.targetGrade = (req, res) => {
+    const courseId = req.params.courseId;
+
+    const updatedGrade = {
+        target: req.body.targetGrade
+    }
+
+    const updateQuery = 
+    `UPDATE courses
+        SET courseTargetGrade = '${updatedGrade.target}'
+        WHERE courseId = ${courseId}
+    `
+
+    db.query(updateQuery, (err, updated)=>{
+        if(err) throw err;
+        console.log('Target Grade has been updated ');
+    })
+}
+
 exports.deleteCourse = (req, res) =>{
     const semesterId = req.params.semesterId;
     const courseId = req.params.id;

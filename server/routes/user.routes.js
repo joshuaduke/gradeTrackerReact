@@ -26,8 +26,9 @@ module.exports = (app)=>{
   app.delete('/courses/:taskId', controller.deleteTask);
 
   
-  app.post('/courses/:semesterId', controller.addCourse);
+  app.post('/courses/addCourse/:semesterId', controller.addCourse);
   app.patch('/courses/:semesterId/:id', controller.updateCourse);
+  app.patch('/updateTargetGrade/:courseId', controller.targetGrade);
   app.delete('/courses/:semesterId/:id', controller.deleteCourse);
 
   app.post('/semesters', controller.addSemester);
